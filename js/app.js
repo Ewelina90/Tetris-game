@@ -18,6 +18,14 @@ document.addEventListener("DOMContentLoaded",function(){
     canvas.width = numberOfRows * sizeOfTile;
 	canvas.height = numberOfColumns * sizeOfTile;
 
+    const canvasNext = document.getElementById('canvas-next');
+    const ctxNext = canvasNext.getContext("2d");
+    const nOfRowsNext = 6;
+    const nOfColNext = 6;
+
+    canvasNext.width = nOfRowsNext * sizeOfTile;
+    canvasNext.height = nOfColNext * sizeOfTile;
+
     const $playBtn = $('.play-btn');
 	const $playerName = $('#player-name span');
 	const $gameTime = $('#game-time span');
@@ -28,14 +36,25 @@ document.addEventListener("DOMContentLoaded",function(){
 	let done = false;
 
     const shapes = [[I, "#ff9800"],[J, "#9c27b0"],[L, "#3f51b5"],[O, "#f9e333"],[S, "#4caf50"],[T, "#00bcd4"],[Z, "#f44336"]];
-	let currentShape = null;
+
+    let arrOfShapes = ['',''];
+    let currentShape = null;
+    let nextShape = null;
 	let setStart = Date.now();
 
-    let board = [];								// Create game-board, fill in with empty strings
+    let board = [];								// Create game-board
 	for (let i = 0; i < numberOfColumns; i++) {
 		board[i] = [];
 		for (let j = 0; j < numberOfRows; j++) {
 			board[i][j] = false;
+		}
+	}
+
+    let boardNext = [];								// Create board for next canvas
+	for (let i = 0; i < nOfColNext; i++) {
+		boardNext[i] = [];
+		for (let j = 0; j < nOfRowsNext; j++) {
+			boardNext[i][j] = false;
 		}
 	}
 
@@ -71,9 +90,15 @@ document.addEventListener("DOMContentLoaded",function(){
 		}
 		$playerName.text($setName);
 		countTime();
-		currentShape = newShape();
-		drawBoard();
+        arrOfShapes[0] = newShape();
+        arrOfShapes[1] = newShape();
+            console.log(arrOfShapes);
+		currentShape = arrOfShapes[0];
+        nextShape = arrOfShapes[1];
+	    drawBoard();
+        drawBoardOnNext();
 		startGame();
+
 	});
 
     document.body.addEventListener("keydown", function (e) {
@@ -104,6 +129,7 @@ document.addEventListener("DOMContentLoaded",function(){
 		let timer = now - setStart;
 		if (timer > 500) {
 			currentShape.moveDown();
+            nextShape.drawOnBoardNext();
 			setStart = now;
 		}
 		if (!done) {
@@ -119,7 +145,16 @@ document.addEventListener("DOMContentLoaded",function(){
 		ctx.strokeStyle = style;
 	}
 
-	const drawBoard = () => {			// drow shapes on board
+    const drawPointOnNext = (x, y) => {					// Drow single square on next block board
+		ctxNext.fillRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
+		let style = ctxNext.strokeStyle;
+		ctxNext.strokeStyle = "#5d5c5c";
+		ctxNext.strokeRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
+		ctxNext.strokeStyle = style;
+	}
+
+
+	const drawBoard = () => {			// drow board on first canvas
 		let backCol = ctx.fillStyle;
 		for (let i = 0; i < numberOfColumns; i++) {
 			for (let j = 0; j < numberOfRows; j++) {
@@ -130,14 +165,28 @@ document.addEventListener("DOMContentLoaded",function(){
 		ctx.fillStyle = backCol;
 	}
 
+    const drawBoardOnNext = () => {			// drow board on next canvas
+		let backCol = ctxNext.fillStyle;
+		for (let i = 0; i < nOfColNext; i++) {
+			for (let j = 0; j < nOfRowsNext; j++) {
+				ctxNext.fillStyle = boardNext[i][j] || clear;
+				drawPointOnNext(j, i, sizeOfTile, sizeOfTile);
+			}
+		}
+        console.log('draw');
+		ctxNext.fillStyle = backCol;
+	}
+
     class Shape {
 		constructor(shapesArr, color) { 			// Class Shape
 			this.shapesArr = shapesArr;
 			this.firstShape = shapesArr[0];
 			this.currIndex = 0;
 			this.color = color;
-			this.x = numberOfRows/2-parseInt(Math.ceil(this.firstShape.length/2), 10);
+			this.x = numberOfRows/2 - parseInt(Math.ceil(this.firstShape.length/2), 10);
 			this.y = -2;
+            this.xNext = nOfColNext/2 - parseInt(Math.ceil(this.firstShape.length/2), 10);
+            this.yNext = nOfColNext/2 - parseInt(Math.ceil(this.firstShape.length/2), 10);
 		}
 
 		rotate(){
@@ -182,7 +231,15 @@ document.addEventListener("DOMContentLoaded",function(){
 		moveDown(){
 			if (this.detectColision(0, 1, this.firstShape)) {
 				this.stopMove();
-				currentShape = newShape();
+                arrOfShapes[0] = arrOfShapes[1];
+                arrOfShapes[1] = newShape();
+				currentShape = arrOfShapes[0];
+                drawBoardOnNext();
+                nextShape = arrOfShapes[1];
+                // console.log('moveDown');
+                // console.log(currentShape);
+                // console.log(nextShape);
+
 			} else {
 				this.clearPoint();
 				this.y += 1 ;
@@ -277,5 +334,19 @@ document.addEventListener("DOMContentLoaded",function(){
 			}
 			ctx.fillStyle = backCol;
 		};
+
+        drawOnBoardNext(){
+            let x = this.xNext;
+			let y = this.yNext;
+            let numberOfBlocks = this.firstShape.length;
+            for (let ix = 0; ix < numberOfBlocks; ix++) {
+                for (let iy = 0; iy < numberOfBlocks; iy++) {
+                    if (this.firstShape[ix][iy]) {
+                        ctxNext.fillStyle = this.color;
+                        drawPointOnNext(x + ix, y + iy);
+                    }
+                }
+            }
+        }
 	};
 });
