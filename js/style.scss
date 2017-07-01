@@ -1,0 +1,134 @@
+@import 'variables.scss';
+
+* {
+	box-sizing: border-box;
+	font-family: 'Play','Arial', sans-serif;
+}
+body {
+	margin: 0;
+	padding: 0;
+	background: #C0C0C0;
+}
+.container{
+	width: 100%;
+	min-width: 360px;
+	height: 100vh;
+	.row{
+        width: 100%;
+        &::before,
+        &::after{
+            @extend %clearfix;
+        }
+		@for $i from 1 through 3{
+			.col-#{$i}{
+				float: left;
+				padding: 1%;
+				width: 100%;
+				min-height: 1px;
+		}}
+	}
+}
+
+.tetris-game {
+	.game-info {
+		background-color: #c0c0c0;
+		text-align: center;
+		.info {
+			display: inline-block;
+			padding: 0 2em;
+			font-size: 1.3em;
+		}
+		#player-name {}
+		#player-score {}
+		#game-speed,
+		#game-time {
+			display: none;
+		}
+		.play-btn {
+			margin-top: 20px;
+			color: white;
+			font-size: 1.3em;
+			background: gray;
+			width: 120px;
+			height: 40px;
+			border-radius: 10px;
+			box-shadow: 0px 6px 3px -3px rgba(255,255,255,.3) inset, 0px -6px 3px -3px rgba(0,0,0,.3) inset, 0px 8px 1px -1px rgba(0,0,0,.8);
+		}
+	}
+	.game-board {
+		background-color: #c0c0c0;
+		h1 {
+			text-align: center;
+			color: blue;
+			position: relative;
+			top: 12px;
+			background: #c0c0c0;
+			margin: 0 auto;
+			width: 5em;
+			padding: 0 12px;
+			letter-spacing: 1px;
+		}
+		.game-board-frame {
+			border: 5px solid #ecd21e;
+			width: 294px;
+			height: 430px;
+			padding: 10px;
+			margin: 0 auto;
+			#canvas-main {
+				margin: 0 auto;
+				width: 100%;
+				height: 100%;
+				background-color: #818c90;
+				display: block;
+				border: 1px solid #747b7d;
+			}
+		}
+		.game-controls {
+			position: relative;
+			.buttons-contener {
+				z-index: 4;
+				position: absolute;
+				$d-pad-circle-size: 250px;
+				width: $d-pad-circle-size;
+				height: $d-pad-circle-size;
+				top: 10px;
+				left: 25%;
+			}
+			.vertical-buttons {
+				position: absolute;
+				background: gray;
+				width: 64px;
+				height: 186px;
+				top: 34px;
+				left: 94px;
+				border-radius: 10px;
+				box-shadow: 0px 6px 3px -3px rgba(255,255,255,.3) inset, 0px -6px 3px -3px rgba(0,0,0,.3) inset, 0px 8px 1px -1px rgba(0,0,0,.8);
+				z-index: 15;
+			}
+			.middle-circle {
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				background: darken(gray, 7%);
+				left: calc(50% - 16px);
+				top: calc(50% - 16px);
+				position: absolute;
+				box-shadow: 0 3px 6px -1px rgba(0,0,0,.3) inset, 0 -1px 2px 0 rgba(255,255,255,.3) inset;
+			}
+			.horizontal-buttons {
+				position: absolute;
+				background: gray;
+				height: 64px;
+				width: 186px;
+				left: 34px;
+				top: 93px;
+				border-radius: 10px;
+				box-shadow: 0px 6px 3px -3px rgba(255,255,255,.3) inset, 0px -6px 3px -3px rgba(0,0,0,.3) inset, 0px 8px 1px -1px rgba(0,0,0,.8);
+				z-index: 10;
+			}
+		}
+	}
+	.game-next-block {
+		display: none;
+	}
+}
