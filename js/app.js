@@ -14,6 +14,11 @@ document.addEventListener("DOMContentLoaded",function(){
 	const $playerName = $('#player-name span');
 	const $gameTime = $('#game-time span');
 
+    let hitWall = 1;
+	let hitBlock = 2;
+	let fullRow = 0;
+	let done = false;
+    
     let board = [];								// Create game-board, fill in with empty strings
 	for (let i = 0; i < numberOfColumns; i++) {
 		board[i] = [];
