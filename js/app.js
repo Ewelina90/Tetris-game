@@ -1,3 +1,11 @@
+import { Z } from './shapes.js';
+import { S } from './shapes.js';
+import { J } from './shapes.js';
+import { L } from './shapes.js';
+import { O } from './shapes.js';
+import { I } from './shapes.js';
+import { T } from './shapes.js';
+
 document.addEventListener("DOMContentLoaded",function(){
     const canvas = document.getElementById('canvas-main');
 	const ctx = canvas.getContext("2d");
@@ -18,7 +26,11 @@ document.addEventListener("DOMContentLoaded",function(){
 	let hitBlock = 2;
 	let fullRow = 0;
 	let done = false;
-    
+
+    const shapes = [[I, "#ff9800"],[J, "#9c27b0"],[L, "#3f51b5"],[O, "#f9e333"],[S, "#4caf50"],[T, "#00bcd4"],[Z, "#f44336"]];
+	let currentShape = null;
+	let setStart = Date.now();
+
     let board = [];								// Create game-board, fill in with empty strings
 	for (let i = 0; i < numberOfColumns; i++) {
 		board[i] = [];
@@ -26,6 +38,78 @@ document.addEventListener("DOMContentLoaded",function(){
 			board[i][j] = false;
 		}
 	}
+
+    const countTime = () => { 		// Start counting game time
+		const $min = $('#minutes');
+		const $sec = $('#seconds');
+		let minutes = 0;
+		let seconds = 0;
+
+		const timer = setInterval(function(){
+			seconds++;
+			if (seconds < 10){
+				 $sec.text('0' + seconds);
+			}
+			else if( seconds > 59 ){
+				seconds = 0;
+				$sec.text('0' + seconds);
+				minutes++;
+				if( minutes < 10 ){
+				  $min.text('0' + minutes);
+				  }
+				  else if( minutes > 59 ){
+					  const timeout = alert('Game over!');
+				  }else{ $min.text(minutes); }
+			}else{ $sec.text(seconds); }
+		}, 1000);
+	};
+
+	$playBtn.on('click',function(e){				// Btn play - starts the game
+		const $setName = prompt('Type your name: ');
+		if($setName === null){
+			return;
+		}
+		$playerName.text($setName);
+		countTime();
+		currentShape = newShape();
+		drawBoard();
+		startGame();
+	});
+
+    document.body.addEventListener("keydown", function (e) {
+		e.preventDefault();
+		switch (e.keyCode) {
+			case 38:					// up
+				currentShape.rotate();
+				break;
+			case 40:					// down
+				currentShape.moveDown();
+				break;
+			case 37:					// left
+				currentShape.moveLeft();
+				break;
+			case 39:					// right
+				currentShape.moveRight();
+			default:
+		};
+	});
+
+    const newShape = () => {					// Get random shape
+		let randonShape = shapes[parseInt(Math.random() * shapes.length, 10)];
+		return new Shape(randonShape[0], randonShape[1]);
+	}
+
+    const startGame = () => {			// game loop
+		let now = Date.now();
+		let timer = now - setStart;
+		if (timer > 500) {
+			currentShape.moveDown();
+			setStart = now;
+		}
+		if (!done) {
+			requestAnimationFrame(startGame);
+		}
+	};
 
     const drawPoint = (x, y) => {					// Drow single square on game-board
 		ctx.fillRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
