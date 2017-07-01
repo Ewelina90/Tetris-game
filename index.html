@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tetris</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet">
+</head>
+<body>
+    <div class="tetris-game container">
+        <div class="row">
+            <section class="game-info col-1">
+                <p id="player-name" class="info">Player: <span></span></p>
+                <p id="player-score" class="info">Score: <span id="score"></span></p>
+                <!-- <p id="game-speed" class="info">Level: <span></span></p> -->
+                <p id="game-time" class="info">Time: <label id="minutes">00</label>:<label id="seconds">00</label></p>
+                <button class="play-btn">PLAY</button></br></br>
+                <!-- <button class="score-btn">High Score</button> -->
+            </section>
+            <section class="game-board col-1">
+                <h1>SUPER</h1>
+                <div class="game-board-frame">
+            		<canvas id="canvas-main"></canvas>
+                    <!-- <audio controls>
+                      <source src="horse.ogg" type="audio/ogg">
+                      <source src="horse.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                    </audio> -->
+                </div>
+                <div class="game-controls">
+                    <div class="buttons-contener">
+            			<div class="vertical-buttons">
+            				<div class="middle-circle"></div>
+            			</div>
+            			<div class="horizontal-buttons">
+            			</div>
+            		</div>
+                </div>
+            </section>
+            <section class="game-next-block col-1">
+                <h2>NEXT BLOCK</h2>
+                <div class="game-board-frame">
+                    <canvas id="canvas-next"></canvas>
+                </div>
+            </section>
+        </div>
+    </div>
+
+<script
+    src="https://code.jquery.com/jquery-3.1.1.js"
+    integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+    crossorigin="anonymous">
+</script>
+<script src="out.js"></script>
+</body>
+</html>
