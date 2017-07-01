@@ -132,3 +132,47 @@ body {
 		display: none;
 	}
 }
+@media(min-width: 650px){
+	.container{
+		width: 100vw;
+		height: 100vh;
+		.row{
+	        width: 100%;
+			padding-top: 50px;
+			.col-1{
+				width: 32%;
+				&:nth-child(2){
+						float: left;
+						padding: 1%;
+						width: 320px;;
+						min-height: 400px;
+				}
+			}
+		}
+	}
+
+	.tetris-game {
+		.game-info {
+			.info {
+				display: block;
+				padding-top: 10px;
+			}
+			#player-name {
+				padding-top: 20px;
+			}
+			#player-score {}
+			#game-speed,
+			#game-time {
+				display: block;
+			}
+		}
+		.game-board {
+			.game-controls {
+				display: none;
+			}
+		}
+		.game-next-block {
+			display: none;
+		}
+	}
+}
