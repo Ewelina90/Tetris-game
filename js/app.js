@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
     let hitWall = 1;
 	let hitBlock = 2;
-	let fullRow = 0;
+	let singleRow = 0;
 	let done = false;
 
     const shapes = [[I, "#ff9800"],[J, "#9c27b0"],[L, "#3f51b5"],[O, "#f9e333"],[S, "#4caf50"],[T, "#00bcd4"],[Z, "#f44336"]];
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded",function(){
 		countTime();
         arrOfShapes[0] = newShape();
         arrOfShapes[1] = newShape();
-            console.log(arrOfShapes);
+            // console.log(arrOfShapes);
 		currentShape = arrOfShapes[0];
         nextShape = arrOfShapes[1];
 	    drawBoard();
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded",function(){
 				drawPointOnNext(j, i, sizeOfTile, sizeOfTile);
 			}
 		}
-        console.log('draw');
+        // console.log('draw');
 		ctxNext.fillStyle = backCol;
 	}
 
@@ -278,7 +278,7 @@ document.addEventListener("DOMContentLoaded",function(){
 					board[this.y + j][this.x + i] = this.color;
 				}
 			}
-			let fullRow = 0;							// Remove full row and add points
+			let fullRow = 0; // Remove full row and add points
 			for (let i = 0; i < numberOfColumns; i++) {
 				let singleRow = true;
 				for (let j = 0; j < numberOfRows; j++) {
@@ -296,10 +296,11 @@ document.addEventListener("DOMContentLoaded",function(){
 					fullRow++;
 				}
 			}
+        
 			if (fullRow > 0) {
-				fullRow += fullRow;
+				singleRow += fullRow;
 				drawBoard();
-				score.textContent = fullRow;
+				score.textContent = singleRow;
 			}
 		};
 
