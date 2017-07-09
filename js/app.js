@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded",function(){
 	let hitBlock = 2;
 	let singleRow = 0;
 	let done = false;
+    let timerId = 0;
 
     const shapes = [[I, "#ff9800"],[J, "#9c27b0"],[L, "#3f51b5"],[O, "#f9e333"],[S, "#4caf50"],[T, "#00bcd4"],[Z, "#f44336"]];
 
@@ -64,7 +65,7 @@ document.addEventListener("DOMContentLoaded",function(){
 		let minutes = 0;
 		let seconds = 0;
 
-		const timer = setInterval(function(){
+		timerId = setInterval(function(){
 			seconds++;
 			if (seconds < 10){
 				 $sec.text('0' + seconds);
@@ -269,7 +270,7 @@ document.addEventListener("DOMContentLoaded",function(){
 					if (this.y + j < 0) {
 						alert("Game Over!"); // Game over!
 						done = true;
-						clearInterval(timer);
+						clearInterval(timerId);
 						return;
 					}
 					if (!this.firstShape[i][j]) {
@@ -296,7 +297,7 @@ document.addEventListener("DOMContentLoaded",function(){
 					fullRow++;
 				}
 			}
-        
+
 			if (fullRow > 0) {
 				singleRow += fullRow;
 				drawBoard();

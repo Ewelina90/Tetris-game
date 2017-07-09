@@ -112,6 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	var hitBlock = 2;
 	var singleRow = 0;
 	var done = false;
+	var timerId = 0;
 
 	var shapes = [[_shapes.I, "#ff9800"], [_shapes.J, "#9c27b0"], [_shapes.L, "#3f51b5"], [_shapes.O, "#f9e333"], [_shapes.S, "#4caf50"], [_shapes.T, "#00bcd4"], [_shapes.Z, "#f44336"]];
 
@@ -143,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		var minutes = 0;
 		var seconds = 0;
 
-		var timer = setInterval(function () {
+		timerId = setInterval(function () {
 			seconds++;
 			if (seconds < 10) {
 				$sec.text('0' + seconds);
@@ -374,7 +375,7 @@ document.addEventListener("DOMContentLoaded", function () {
 						if (this.y + _j5 < 0) {
 							alert("Game Over!"); // Game over!
 							done = true;
-							clearInterval(timer);
+							clearInterval(timerId);
 							return;
 						}
 						if (!this.firstShape[_i5][_j5]) {
