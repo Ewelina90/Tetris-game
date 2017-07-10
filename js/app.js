@@ -9,7 +9,6 @@ import { T } from './shapes.js';
 document.addEventListener("DOMContentLoaded",function(){
     const canvas = document.getElementById('canvas-main');
 	const ctx = canvas.getContext("2d");
-	const score = document.getElementById('score');
 	const clear = '#818c90';
 	const numberOfRows = 12;
 	const numberOfColumns = 20;
@@ -29,6 +28,9 @@ document.addEventListener("DOMContentLoaded",function(){
     const $playBtn = $('.play-btn');
 	const $playerName = $('#player-name span');
 	const $gameTime = $('#game-time span');
+    const score = document.getElementById('score');
+    const gameLevel = document.getElementById('level');
+
 
     let hitWall = 1;
 	let hitBlock = 2;
@@ -42,6 +44,8 @@ document.addEventListener("DOMContentLoaded",function(){
     let currentShape = null;
     let nextShape = null;
 	let setStart = Date.now();
+    let gameSpeed = 500;
+    let level = 1;
 
     let board = [];								// Create game-board
 	for (let i = 0; i < numberOfColumns; i++) {
@@ -128,7 +132,8 @@ document.addEventListener("DOMContentLoaded",function(){
     const startGame = () => {			// game loop
 		let now = Date.now();
 		let timer = now - setStart;
-		if (timer > 500) {
+
+		if (timer > gameSpeed) {
 			currentShape.moveDown();
             nextShape.drawOnBoardNext();
 			setStart = now;
@@ -174,7 +179,6 @@ document.addEventListener("DOMContentLoaded",function(){
 				drawPointOnNext(j, i, sizeOfTile, sizeOfTile);
 			}
 		}
-        // console.log('draw');
 		ctxNext.fillStyle = backCol;
 	}
 
@@ -237,9 +241,6 @@ document.addEventListener("DOMContentLoaded",function(){
 				currentShape = arrOfShapes[0];
                 drawBoardOnNext();
                 nextShape = arrOfShapes[1];
-                // console.log('moveDown');
-                // console.log(currentShape);
-                // console.log(nextShape);
 
 			} else {
 				this.clearPoint();
@@ -299,10 +300,22 @@ document.addEventListener("DOMContentLoaded",function(){
 			}
 
 			if (fullRow > 0) {
-				singleRow += fullRow;
+				singleRow += fullRow * 10;
+                if(singleRow%50 === 0){
+                    if(gameSpeed === 150){
+                        gameSpeed = 150;
+                        level;
+                    }else{
+                        gameSpeed -= 50;
+                        level += 1;
+                    }
+                }else{
+                    level;
+                }
 				drawBoard();
 				score.textContent = singleRow;
 			}
+            gameLevel.textContent = level;
 		};
 
 		clearPoint(){		// Clear color

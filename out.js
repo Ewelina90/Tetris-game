@@ -87,7 +87,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 document.addEventListener("DOMContentLoaded", function () {
 	var canvas = document.getElementById('canvas-main');
 	var ctx = canvas.getContext("2d");
-	var score = document.getElementById('score');
 	var clear = '#818c90';
 	var numberOfRows = 12;
 	var numberOfColumns = 20;
@@ -107,6 +106,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	var $playBtn = $('.play-btn');
 	var $playerName = $('#player-name span');
 	var $gameTime = $('#game-time span');
+	var score = document.getElementById('score');
+	var gameLevel = document.getElementById('level');
 
 	var hitWall = 1;
 	var hitBlock = 2;
@@ -120,6 +121,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	var currentShape = null;
 	var nextShape = null;
 	var setStart = Date.now();
+	var gameSpeed = 500;
+	var level = 1;
 
 	var board = []; // Create game-board
 	for (var i = 0; i < numberOfColumns; i++) {
@@ -215,7 +218,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		// game loop
 		var now = Date.now();
 		var timer = now - setStart;
-		if (timer > 500) {
+
+		if (timer > gameSpeed) {
 			currentShape.moveDown();
 			nextShape.drawOnBoardNext();
 			setStart = now;
@@ -264,7 +268,6 @@ document.addEventListener("DOMContentLoaded", function () {
 				drawPointOnNext(_j3, _i3, sizeOfTile, sizeOfTile);
 			}
 		}
-		// console.log('draw');
 		ctxNext.fillStyle = backCol;
 	};
 
@@ -339,9 +342,6 @@ document.addEventListener("DOMContentLoaded", function () {
 					currentShape = arrOfShapes[0];
 					drawBoardOnNext();
 					nextShape = arrOfShapes[1];
-					// console.log('moveDown');
-					// console.log(currentShape);
-					// console.log(nextShape);
 				} else {
 					this.clearPoint();
 					this.y += 1;
@@ -404,10 +404,22 @@ document.addEventListener("DOMContentLoaded", function () {
 				}
 
 				if (fullRow > 0) {
-					singleRow += fullRow;
+					singleRow += fullRow * 10;
+					if (singleRow % 50 === 0) {
+						if (gameSpeed === 150) {
+							gameSpeed = 150;
+							level;
+						} else {
+							gameSpeed -= 50;
+							level += 1;
+						}
+					} else {
+						level;
+					}
 					drawBoard();
 					score.textContent = singleRow;
 				}
+				gameLevel.textContent = level;
 			}
 		}, {
 			key: 'clearPoint',
