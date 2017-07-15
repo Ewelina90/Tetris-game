@@ -317,7 +317,7 @@ document.addEventListener("DOMContentLoaded",function(){
 			}
             gameLevel.textContent = level;
 		};
-
+        
 		clearPoint(){		// Clear color
 			let backCol = ctx.fillStyle;
 			ctx.fillStyle = clear;
