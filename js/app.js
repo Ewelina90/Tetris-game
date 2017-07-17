@@ -9,10 +9,10 @@ import { T } from './shapes.js';
 document.addEventListener("DOMContentLoaded",function(){
     const canvas = document.getElementById('canvas-main');
 	const ctx = canvas.getContext("2d");
-	const clear = '#818c90';
-	const numberOfRows = 12;
+	const clear = '#97b289';
+	const numberOfRows = 10;
 	const numberOfColumns = 20;
-	const sizeOfTile = 24;
+	const sizeOfTile = 15;
 
     canvas.width = numberOfRows * sizeOfTile;
 	canvas.height = numberOfColumns * sizeOfTile;
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded",function(){
 	let done = false;
     let timerId = 0;
 
-    const shapes = [[I, "#ff9800"],[J, "#9c27b0"],[L, "#3f51b5"],[O, "#f9e333"],[S, "#4caf50"],[T, "#00bcd4"],[Z, "#f44336"]];
+    const shapes = [[I, "#0ff"],[J, "#a0f"],[L, "#ffa500"],[O, "#0000ff"],[S, "#f00"],[T, "#0f0"],[Z, "#ff0"]];
 
     let arrOfShapes = ['',''];
     let currentShape = null;
@@ -146,9 +146,13 @@ document.addEventListener("DOMContentLoaded",function(){
     const drawPoint = (x, y) => {					// Drow single square on game-board
 		ctx.fillRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
 		let style = ctx.strokeStyle;
+        let fillstyle = ctx.fillStyle;
 		ctx.strokeStyle = "#5d5c5c";
 		ctx.strokeRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
-		ctx.strokeStyle = style;
+        ctx.fillStyle = "rgba(105, 111, 102, 0.3)";
+        ctx.fillRect(x * sizeOfTile + 2*sizeOfTile/8, y * sizeOfTile + 2*sizeOfTile/8, sizeOfTile/2, sizeOfTile/2);
+        ctx.fillStyle = fillstyle;
+        ctx.strokeStyle = style;
 	}
 
     const drawPointOnNext = (x, y) => {					// Drow single square on next block board
@@ -317,7 +321,7 @@ document.addEventListener("DOMContentLoaded",function(){
 			}
             gameLevel.textContent = level;
 		};
-        
+
 		clearPoint(){		// Clear color
 			let backCol = ctx.fillStyle;
 			ctx.fillStyle = clear;

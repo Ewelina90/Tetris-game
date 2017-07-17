@@ -63,39 +63,39 @@ body {
 			background-color: red;
 			border-radius: 10px;
 			box-shadow: 0px 0px 10px 1px #ffdada inset;
-
-
-		}
-		h1 {
-			text-align: center;
-			color: blue;
-			position: relative;
-			top: 12px;
-			background: #ff0000;
-			margin: 0 auto;
-			width: 5em;
-			padding: 0 12px;
-			letter-spacing: 1px;
-		}
-		.game-board-frame {
-			border: 7px solid #ab2e2e;
-			width: 328px;
-			height: 390px;
-			padding: 26px;
-			margin: 0 auto;
-			.game-board-main {
-				border: 4px solid #ff4545;
-				border-style: inset;
-				#canvas-main {
-					margin: 0 auto;
-					width: 100%;
-					height: 100%;
-					background-color: #818c90;
-					display: block;
-					border: 1px solid #747b7d;
+			h1 {
+				text-align: center;
+				color: blue;
+				position: relative;
+				top: 12px;
+				background: #ff0000;
+				margin: 0 auto;
+				width: 5em;
+				padding: 0 12px;
+				letter-spacing: 1px;
+			}
+			.game-board-frame {
+				border: 7px solid #ab2e2e;
+				width: 328px;
+				height: 390px;
+				padding: 26px;
+				margin: 0 auto;
+				.game-board-main {
+					border: 4px solid #ff4545;
+					border-style: inset;
+					background-color: #97b289;
+					#canvas-main {
+						margin: 5px;
+						width: 150px;
+						height: 300px;
+						background-color: #97b289;
+						display: block;
+						border: 2px solid black;
+					}
 				}
 			}
 		}
+
 		.game-controls {
 			position: relative;
 			.buttons-contener {
@@ -216,11 +216,10 @@ body {
 
 				#canvas-next {
 					display: block;
-					margin: 0 auto;
 					border:1px solid #000000;
 					width: 100%;
 					height: 100%;
-					background-color: #818c90;
+					background-color: #97b289;
 				}
 			}
 		}

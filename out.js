@@ -68,7 +68,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
-module.exports = __webpack_require__(2);
+module.exports = __webpack_require__(3);
 
 
 /***/ }),
@@ -80,17 +80,17 @@ module.exports = __webpack_require__(2);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _shapes = __webpack_require__(7);
+var _shapes = __webpack_require__(2);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 document.addEventListener("DOMContentLoaded", function () {
 	var canvas = document.getElementById('canvas-main');
 	var ctx = canvas.getContext("2d");
-	var clear = '#818c90';
-	var numberOfRows = 12;
+	var clear = '#97b289';
+	var numberOfRows = 10;
 	var numberOfColumns = 20;
-	var sizeOfTile = 24;
+	var sizeOfTile = 15;
 
 	canvas.width = numberOfRows * sizeOfTile;
 	canvas.height = numberOfColumns * sizeOfTile;
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	var done = false;
 	var timerId = 0;
 
-	var shapes = [[_shapes.I, "#ff9800"], [_shapes.J, "#9c27b0"], [_shapes.L, "#3f51b5"], [_shapes.O, "#f9e333"], [_shapes.S, "#4caf50"], [_shapes.T, "#00bcd4"], [_shapes.Z, "#f44336"]];
+	var shapes = [[_shapes.I, "#0ff"], [_shapes.J, "#a0f"], [_shapes.L, "#ffa500"], [_shapes.O, "#0000ff"], [_shapes.S, "#f00"], [_shapes.T, "#0f0"], [_shapes.Z, "#ff0"]];
 
 	var arrOfShapes = ['', ''];
 	var currentShape = null;
@@ -233,8 +233,12 @@ document.addEventListener("DOMContentLoaded", function () {
 		// Drow single square on game-board
 		ctx.fillRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
 		var style = ctx.strokeStyle;
+		var fillstyle = ctx.fillStyle;
 		ctx.strokeStyle = "#5d5c5c";
 		ctx.strokeRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
+		ctx.fillStyle = "rgba(105, 111, 102, 0.3)";
+		ctx.fillRect(x * sizeOfTile + 2 * sizeOfTile / 8, y * sizeOfTile + 2 * sizeOfTile / 8, sizeOfTile / 2, sizeOfTile / 2);
+		ctx.fillStyle = fillstyle;
 		ctx.strokeStyle = style;
 	};
 
@@ -483,10 +487,34 @@ document.addEventListener("DOMContentLoaded", function () {
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var I = exports.I = [[[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]], [[0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]]];
+
+var J = exports.J = [[[1, 0, 0], [1, 1, 1], [0, 0, 0]], [[0, 1, 1], [0, 1, 0], [0, 1, 0]], [[0, 0, 0], [1, 1, 1], [0, 0, 1]], [[0, 1, 0], [0, 1, 0], [1, 1, 0]]];
+
+var L = exports.L = [[[0, 0, 1], [1, 1, 1], [0, 0, 0]], [[0, 1, 0], [0, 1, 0], [0, 1, 1]], [[0, 0, 0], [1, 1, 1], [1, 0, 0]], [[1, 1, 0], [0, 1, 0], [0, 1, 0]]];
+
+var O = exports.O = [[[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]];
+
+var S = exports.S = [[[0, 1, 1], [1, 1, 0], [0, 0, 0]], [[0, 1, 0], [0, 1, 1], [0, 0, 1]], [[0, 0, 0], [0, 1, 1], [1, 1, 0]], [[1, 0, 0], [1, 1, 0], [0, 1, 0]]];
+
+var T = exports.T = [[[0, 1, 0], [1, 1, 1], [0, 0, 0]], [[0, 1, 0], [0, 1, 1], [0, 1, 0]], [[0, 0, 0], [1, 1, 1], [0, 1, 0]], [[0, 1, 0], [1, 1, 0], [0, 1, 0]]];
+
+var Z = exports.Z = [[[1, 1, 0], [0, 1, 1], [0, 0, 0]], [[0, 0, 1], [0, 1, 1], [0, 1, 0]], [[0, 0, 0], [1, 1, 0], [0, 1, 1]], [[0, 1, 0], [1, 1, 0], [1, 0, 0]]];
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(3);
+var content = __webpack_require__(4);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -494,7 +522,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(5)(content, options);
+var update = __webpack_require__(6)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -511,21 +539,21 @@ if(false) {
 }
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(undefined);
+exports = module.exports = __webpack_require__(5)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, ".container .row::before, .container .row::after {\n  display: block;\n  clear: both;\n  content: \"\";\n  height: 0;\n  visibility: hidden; }\n\n* {\n  box-sizing: border-box;\n  font-family: 'Play','Arial', sans-serif; }\n\nbody {\n  margin: 0;\n  padding: 0;\n  background: #C0C0C0; }\n\n.container {\n  width: 100%;\n  min-width: 360px;\n  height: 100vh; }\n  .container .row {\n    width: 100%; }\n    .container .row .col-1 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n    .container .row .col-2 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n    .container .row .col-3 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n\n.tetris-game .game-info {\n  background-color: #c0c0c0;\n  text-align: center; }\n  .tetris-game .game-info .info {\n    display: inline-block;\n    padding: 0 2em;\n    font-size: 1.3em; }\n  .tetris-game .game-info #game-speed,\n  .tetris-game .game-info #game-time {\n    display: none; }\n  .tetris-game .game-info .play-btn {\n    margin-top: 20px;\n    color: white;\n    font-size: 1.3em;\n    background: gray;\n    width: 120px;\n    height: 40px;\n    border-radius: 10px;\n    box-shadow: 0px 6px 3px -3px rgba(255, 255, 255, 0.3) inset, 0px -6px 3px -3px rgba(0, 0, 0, 0.3) inset, 0px 8px 1px -1px rgba(0, 0, 0, 0.8); }\n\n.tetris-game .game-board {\n  background-color: #c0c0c0; }\n  .tetris-game .game-board .game-pad {\n    width: 437px;\n    height: 100vh;\n    background-color: red;\n    border-radius: 10px;\n    box-shadow: 0px 0px 10px 1px #ffdada inset; }\n  .tetris-game .game-board h1 {\n    text-align: center;\n    color: blue;\n    position: relative;\n    top: 12px;\n    background: #ff0000;\n    margin: 0 auto;\n    width: 5em;\n    padding: 0 12px;\n    letter-spacing: 1px; }\n  .tetris-game .game-board .game-board-frame {\n    border: 7px solid #ab2e2e;\n    width: 328px;\n    height: 390px;\n    padding: 26px;\n    margin: 0 auto; }\n    .tetris-game .game-board .game-board-frame .game-board-main {\n      border: 4px solid #ff4545;\n      border-style: inset; }\n      .tetris-game .game-board .game-board-frame .game-board-main #canvas-main {\n        margin: 0 auto;\n        width: 100%;\n        height: 100%;\n        background-color: #818c90;\n        display: block;\n        border: 1px solid #747b7d; }\n  .tetris-game .game-board .game-controls {\n    position: relative; }\n    .tetris-game .game-board .game-controls .buttons-contener {\n      z-index: 4;\n      position: absolute;\n      width: 250px;\n      height: 250px;\n      top: 10px;\n      left: 25%; }\n    .tetris-game .game-board .game-controls .vertical-buttons {\n      position: absolute;\n      background: gray;\n      width: 64px;\n      height: 186px;\n      top: 34px;\n      left: 94px;\n      border-radius: 10px;\n      box-shadow: 0px 6px 3px -3px rgba(255, 255, 255, 0.3) inset, 0px -6px 3px -3px rgba(0, 0, 0, 0.3) inset, 0px 8px 1px -1px rgba(0, 0, 0, 0.8);\n      z-index: 15; }\n    .tetris-game .game-board .game-controls .middle-circle {\n      width: 32px;\n      height: 32px;\n      border-radius: 50%;\n      background: #6e6e6e;\n      left: calc(50% - 16px);\n      top: calc(50% - 16px);\n      position: absolute;\n      box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.3) inset, 0 -1px 2px 0 rgba(255, 255, 255, 0.3) inset; }\n    .tetris-game .game-board .game-controls .horizontal-buttons {\n      position: absolute;\n      background: gray;\n      height: 64px;\n      width: 186px;\n      left: 34px;\n      top: 93px;\n      border-radius: 10px;\n      box-shadow: 0px 6px 3px -3px rgba(255, 255, 255, 0.3) inset, 0px -6px 3px -3px rgba(0, 0, 0, 0.3) inset, 0px 8px 1px -1px rgba(0, 0, 0, 0.8);\n      z-index: 10; }\n\n.tetris-game .game-next-block {\n  display: none; }\n\n@media (min-width: 650px) {\n  .container {\n    width: 100vw;\n    height: 100vh; }\n    .container .row {\n      width: 100%; }\n      .container .row .col-1 {\n        width: 32%; }\n        .container .row .col-1:nth-child(2) {\n          float: left;\n          width: 320px;\n          min-height: 400px; }\n  .tetris-game .game-info .info {\n    display: block;\n    padding-top: 10px; }\n  .tetris-game .game-info #player-name {\n    padding-top: 20px; }\n  .tetris-game .game-info #game-speed,\n  .tetris-game .game-info #game-time {\n    display: block; }\n  .tetris-game .game-board .game-controls {\n    display: none; }\n  .tetris-game .game-next-block {\n    display: none; } }\n\n@media (min-width: 1000px) {\n  .tetris-game .game-next-block {\n    display: block;\n    text-align: center; }\n    .tetris-game .game-next-block h2 {\n      font-size: 1em;\n      text-align: center;\n      color: blue;\n      position: relative;\n      top: 12px;\n      background: #c0c0c0;\n      margin: 0 auto;\n      width: 5em;\n      padding: 0 12px;\n      letter-spacing: 1px; }\n    .tetris-game .game-next-block .game-board-frame {\n      border: 3px solid #ecd21e;\n      width: 200px;\n      height: 200px;\n      padding: 10px;\n      margin: 0 auto; }\n      .tetris-game .game-next-block .game-board-frame #canvas-next {\n        display: block;\n        margin: 0 auto;\n        border: 1px solid #000000;\n        width: 100%;\n        height: 100%;\n        background-color: #818c90; } }\n", ""]);
+exports.push([module.i, ".container .row::before, .container .row::after {\n  display: block;\n  clear: both;\n  content: \"\";\n  height: 0;\n  visibility: hidden; }\n\n* {\n  box-sizing: border-box;\n  font-family: 'Play','Arial', sans-serif; }\n\nbody {\n  margin: 0;\n  padding: 0;\n  background: #C0C0C0; }\n\n.container {\n  width: 100%;\n  min-width: 360px;\n  height: 100vh; }\n  .container .row {\n    width: 100%; }\n    .container .row .col-1 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n    .container .row .col-2 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n    .container .row .col-3 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n\n.tetris-game .game-info {\n  background-color: #c0c0c0;\n  text-align: center; }\n  .tetris-game .game-info .info {\n    display: inline-block;\n    padding: 0 2em;\n    font-size: 1.3em; }\n  .tetris-game .game-info #game-speed,\n  .tetris-game .game-info #game-time {\n    display: none; }\n  .tetris-game .game-info .play-btn {\n    margin-top: 20px;\n    color: white;\n    font-size: 1.3em;\n    background: gray;\n    width: 120px;\n    height: 40px;\n    border-radius: 10px;\n    box-shadow: 0px 6px 3px -3px rgba(255, 255, 255, 0.3) inset, 0px -6px 3px -3px rgba(0, 0, 0, 0.3) inset, 0px 8px 1px -1px rgba(0, 0, 0, 0.8); }\n\n.tetris-game .game-board {\n  background-color: #c0c0c0; }\n  .tetris-game .game-board .game-pad {\n    width: 437px;\n    height: 100vh;\n    background-color: red;\n    border-radius: 10px;\n    box-shadow: 0px 0px 10px 1px #ffdada inset; }\n    .tetris-game .game-board .game-pad h1 {\n      text-align: center;\n      color: blue;\n      position: relative;\n      top: 12px;\n      background: #ff0000;\n      margin: 0 auto;\n      width: 5em;\n      padding: 0 12px;\n      letter-spacing: 1px; }\n    .tetris-game .game-board .game-pad .game-board-frame {\n      border: 7px solid #ab2e2e;\n      width: 328px;\n      height: 390px;\n      padding: 26px;\n      margin: 0 auto; }\n      .tetris-game .game-board .game-pad .game-board-frame .game-board-main {\n        border: 4px solid #ff4545;\n        border-style: inset;\n        background-color: #97b289; }\n        .tetris-game .game-board .game-pad .game-board-frame .game-board-main #canvas-main {\n          margin: 5px;\n          width: 150px;\n          height: 300px;\n          background-color: #97b289;\n          display: block;\n          border: 2px solid black; }\n  .tetris-game .game-board .game-controls {\n    position: relative; }\n    .tetris-game .game-board .game-controls .buttons-contener {\n      z-index: 4;\n      position: absolute;\n      width: 250px;\n      height: 250px;\n      top: 10px;\n      left: 25%; }\n    .tetris-game .game-board .game-controls .vertical-buttons {\n      position: absolute;\n      background: gray;\n      width: 64px;\n      height: 186px;\n      top: 34px;\n      left: 94px;\n      border-radius: 10px;\n      box-shadow: 0px 6px 3px -3px rgba(255, 255, 255, 0.3) inset, 0px -6px 3px -3px rgba(0, 0, 0, 0.3) inset, 0px 8px 1px -1px rgba(0, 0, 0, 0.8);\n      z-index: 15; }\n    .tetris-game .game-board .game-controls .middle-circle {\n      width: 32px;\n      height: 32px;\n      border-radius: 50%;\n      background: #6e6e6e;\n      left: calc(50% - 16px);\n      top: calc(50% - 16px);\n      position: absolute;\n      box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.3) inset, 0 -1px 2px 0 rgba(255, 255, 255, 0.3) inset; }\n    .tetris-game .game-board .game-controls .horizontal-buttons {\n      position: absolute;\n      background: gray;\n      height: 64px;\n      width: 186px;\n      left: 34px;\n      top: 93px;\n      border-radius: 10px;\n      box-shadow: 0px 6px 3px -3px rgba(255, 255, 255, 0.3) inset, 0px -6px 3px -3px rgba(0, 0, 0, 0.3) inset, 0px 8px 1px -1px rgba(0, 0, 0, 0.8);\n      z-index: 10; }\n\n.tetris-game .game-next-block {\n  display: none; }\n\n@media (min-width: 650px) {\n  .container {\n    width: 100vw;\n    height: 100vh; }\n    .container .row {\n      width: 100%; }\n      .container .row .col-1 {\n        width: 32%; }\n        .container .row .col-1:nth-child(2) {\n          float: left;\n          width: 320px;\n          min-height: 400px; }\n  .tetris-game .game-info .info {\n    display: block;\n    padding-top: 10px; }\n  .tetris-game .game-info #player-name {\n    padding-top: 20px; }\n  .tetris-game .game-info #game-speed,\n  .tetris-game .game-info #game-time {\n    display: block; }\n  .tetris-game .game-board .game-controls {\n    display: none; }\n  .tetris-game .game-next-block {\n    display: none; } }\n\n@media (min-width: 1000px) {\n  .tetris-game .game-next-block {\n    display: block;\n    text-align: center; }\n    .tetris-game .game-next-block h2 {\n      font-size: 1em;\n      text-align: center;\n      color: blue;\n      position: relative;\n      top: 12px;\n      background: #c0c0c0;\n      margin: 0 auto;\n      width: 5em;\n      padding: 0 12px;\n      letter-spacing: 1px; }\n    .tetris-game .game-next-block .game-board-frame {\n      border: 3px solid #ecd21e;\n      width: 200px;\n      height: 200px;\n      padding: 10px;\n      margin: 0 auto; }\n      .tetris-game .game-next-block .game-board-frame #canvas-next {\n        display: block;\n        border: 1px solid #000000;\n        width: 100%;\n        height: 100%;\n        background-color: #97b289; } }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 /*
@@ -607,7 +635,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -653,7 +681,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(6);
+var	fixUrls = __webpack_require__(7);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -966,7 +994,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 
@@ -1059,30 +1087,6 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-var I = exports.I = [[[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]], [[0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]]];
-
-var J = exports.J = [[[1, 0, 0], [1, 1, 1], [0, 0, 0]], [[0, 1, 1], [0, 1, 0], [0, 1, 0]], [[0, 0, 0], [1, 1, 1], [0, 0, 1]], [[0, 1, 0], [0, 1, 0], [1, 1, 0]]];
-
-var L = exports.L = [[[0, 0, 1], [1, 1, 1], [0, 0, 0]], [[0, 1, 0], [0, 1, 0], [0, 1, 1]], [[0, 0, 0], [1, 1, 1], [1, 0, 0]], [[1, 1, 0], [0, 1, 0], [0, 1, 0]]];
-
-var O = exports.O = [[[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]];
-
-var S = exports.S = [[[0, 1, 1], [1, 1, 0], [0, 0, 0]], [[0, 1, 0], [0, 1, 1], [0, 0, 1]], [[0, 0, 0], [0, 1, 1], [1, 1, 0]], [[1, 0, 0], [1, 1, 0], [0, 1, 0]]];
-
-var T = exports.T = [[[0, 1, 0], [1, 1, 1], [0, 0, 0]], [[0, 1, 0], [0, 1, 1], [0, 1, 0]], [[0, 0, 0], [1, 1, 1], [0, 1, 0]], [[0, 1, 0], [1, 1, 0], [0, 1, 0]]];
-
-var Z = exports.Z = [[[1, 1, 0], [0, 1, 1], [0, 0, 0]], [[0, 0, 1], [0, 1, 1], [0, 1, 0]], [[0, 0, 0], [1, 1, 0], [0, 1, 1]], [[0, 1, 0], [1, 1, 0], [1, 0, 0]]];
 
 /***/ })
 /******/ ]);
