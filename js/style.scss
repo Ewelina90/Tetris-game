@@ -41,16 +41,16 @@ body {
 		// #game-time {
 		// 	display: none;
 		// }
-		.play-btn {
-			margin-top: 20px;
-			color: white;
-			font-size: 1.3em;
-			background: gray;
-			width: 120px;
-			height: 40px;
-			border-radius: 10px;
-			box-shadow: 0px 6px 3px -3px rgba(255,255,255,.3) inset, 0px -6px 3px -3px rgba(0,0,0,.3) inset, 0px 8px 1px -1px rgba(0,0,0,.8);
-		}
+		// .play-btn {
+		// 	margin-top: 20px;
+		// 	color: white;
+		// 	font-size: 1.3em;
+		// 	background: gray;
+		// 	width: 120px;
+		// 	height: 40px;
+		// 	border-radius: 10px;
+		// 	box-shadow: 0px 6px 3px -3px rgba(255,255,255,.3) inset, 0px -6px 3px -3px rgba(0,0,0,.3) inset, 0px 8px 1px -1px rgba(0,0,0,.8);
+		// }
 	}
 	.game-board {
 		background-color: #eae7e7;
@@ -127,15 +127,24 @@ body {
 		}
 
 		.game-controls {
-			position: relative;
+			// position: relative;
 			.buttons-contener {
 				z-index: 4;
-				position: absolute;
+				// position: absolute;
 				$d-pad-circle-size: 250px;
 				width: $d-pad-circle-size;
 				height: $d-pad-circle-size;
-				top: 10px;
-				left: 25%;
+				// top: 10px;
+				// left: 25%;
+				margin: 0 auto;
+				button {
+					background: #ecd21e;
+					width: 60px;
+					height: 60px;
+					border-radius: 50%;
+					border: 1px solid gray;
+					box-shadow: 0px 8px 1px -1px rgba(255,255,255,0.2) inset;
+				}
 			}
 			// .vertical-buttons {
 			// 	position: absolute;
