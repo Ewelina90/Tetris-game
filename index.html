@@ -9,39 +9,59 @@
 <body>
     <div class="tetris-game container">
         <div class="row">
-            <section class="game-info col-1">
+            <!-- <section class="game-info col-1">
                 <p id="player-name" class="info">Player: <span></span></p>
                 <p id="player-score" class="info">Score: <span id="score">0</span></p>
                 <p id="game-speed" class="info">Level: <span id="level">1</span></p>
                 <p id="game-time" class="info">Time: <label id="minutes">00</label>:<label id="seconds">00</label></p>
                 <button class="play-btn">PLAY</button></br></br>
-                <!-- <button class="score-btn">High Score</button> -->
-            </section>
+                <button class="score-btn">High Score</button>
+            </section> -->
             <section class="game-board col-1">
                 <div class="game-pad">
                     <h1>SUPER</h1>
                     <div class="game-board-frame">
                 		<div class="game-board-main">
-                		    <canvas id="canvas-main"></canvas>
+                            <div class="canvas">
+                                <canvas id="canvas-main"></canvas>
+                            </div>
+                            <div class="game-info">
+                                <p id="player-name" class="info">Player:</br>
+                                     <span>&nbsp;</span>
+                                 </p>
+                                <p id="player-score" class="info">Score: </br>
+                                    <span id="score">0</span>
+                                </p>
+                                <p id="game-speed" class="info">Level: </br>
+                                    <span id="level">1</span>
+                                </p>
+                                <div class="game-board-frame">
+                                    <canvas id="canvas-next"></canvas>
+                                </div>
+                                <p id="game-time" class="info">Time: </br>
+                                    <label id="minutes">00</label>:<label id="seconds">00</label>
+                                </p>
+                            </div>
                 		</div>
                     </div>
                     <div class="game-controls">
                         <div class="buttons-contener">
-                			<div class="vertical-buttons">
+                            <button class="play-btn">PLAY</button></br></br>
+                			<!-- <div class="vertical-buttons">
                 				<div class="middle-circle"></div>
                 			</div>
                 			<div class="horizontal-buttons">
-                			</div>
+                			</div> -->
                 		</div>
                     </div>
                 </div>
             </section>
-            <section class="game-next-block col-1">
+            <!-- <section class="game-next-block col-1">
                 <h2>NEXT BLOCK</h2>
                 <div class="game-board-frame">
                     <canvas id="canvas-next"></canvas>
                 </div>
-            </section>
+            </section> -->
         </div>
     </div>
 
