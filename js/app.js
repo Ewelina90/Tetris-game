@@ -30,7 +30,10 @@ document.addEventListener("DOMContentLoaded",function(){
 	const $gameTime = $('#game-time span');
     const score = document.getElementById('score');
     const gameLevel = document.getElementById('level');
-
+    const leftBtn = document.querySelector('.arrow-buttons .left-btn');
+    const rightBtn = document.querySelector('.arrow-buttons .right-btn');
+    const downBtn = document.querySelector('.arrow-buttons .down-btn');
+    const rotateBtn = document.querySelector('.rotate-btn button');
 
     let hitWall = 1;
 	let hitBlock = 2;
@@ -123,6 +126,19 @@ document.addEventListener("DOMContentLoaded",function(){
 			default:
 		};
 	});
+
+    leftBtn.addEventListener("click", function(e){
+        currentShape.moveLeft();
+    });
+    rightBtn.addEventListener("click", function(e){
+        currentShape.moveRight();
+    });
+    downBtn.addEventListener("click", function(e){
+        currentShape.moveDown();
+    });
+    rotateBtn.addEventListener("click", function(e){
+        currentShape.rotate();
+    });
 
     const newShape = () => {					// Get random shape
 		let randonShape = shapes[parseInt(Math.random() * shapes.length, 10)];
