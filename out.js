@@ -127,22 +127,9 @@ document.addEventListener("DOMContentLoaded", function () {
 	var setStart = Date.now();
 	var gameSpeed = 500;
 	var level = 1;
-
 	var board = []; // Create game-board
-	for (var i = 0; i < numberOfColumns; i++) {
-		board[i] = [];
-		for (var j = 0; j < numberOfRows; j++) {
-			board[i][j] = false;
-		}
-	}
-
 	var boardNext = []; // Create board for next canvas
-	for (var _i = 0; _i < nOfColNext; _i++) {
-		boardNext[_i] = [];
-		for (var _j = 0; _j < nOfRowsNext; _j++) {
-			boardNext[_i][_j] = false;
-		}
-	}
+
 
 	var countTime = function countTime() {
 		// Start counting game time
@@ -150,7 +137,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		var $sec = $('#seconds');
 		var minutes = 0;
 		var seconds = 0;
-
 		timerId = setInterval(function () {
 			seconds++;
 			if (seconds < 10) {
@@ -179,6 +165,27 @@ document.addEventListener("DOMContentLoaded", function () {
 			return;
 		}
 		$playerName.text($setName);
+		clearInterval(timerId);
+		singleRow = 0;
+		level = 1;
+		score.textContent = singleRow;
+		gameLevel.textContent = level;
+
+		board = [];
+		for (var i = 0; i < numberOfColumns; i++) {
+			board[i] = [];
+			for (var j = 0; j < numberOfRows; j++) {
+				board[i][j] = false;
+			}
+		}
+
+		boardNext = [];
+		for (var _i = 0; _i < nOfColNext; _i++) {
+			boardNext[_i] = [];
+			for (var _j = 0; _j < nOfRowsNext; _j++) {
+				boardNext[_i][_j] = false;
+			}
+		}
 		countTime();
 		arrOfShapes[0] = newShape();
 		arrOfShapes[1] = newShape();
@@ -235,7 +242,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		// game loop
 		var now = Date.now();
 		var timer = now - setStart;
-
 		if (timer > gameSpeed) {
 			currentShape.moveDown();
 			nextShape.drawOnBoardNext();
@@ -271,10 +277,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	var drawBoard = function drawBoard() {
 		// drow board on first canvas
 		var backCol = ctx.fillStyle;
-		for (var _i2 = 0; _i2 < numberOfColumns; _i2++) {
-			for (var _j2 = 0; _j2 < numberOfRows; _j2++) {
-				ctx.fillStyle = board[_i2][_j2] || clear;
-				drawPoint(_j2, _i2, sizeOfTile, sizeOfTile);
+		for (var i = 0; i < numberOfColumns; i++) {
+			for (var j = 0; j < numberOfRows; j++) {
+				ctx.fillStyle = board[i][j] || clear;
+				drawPoint(j, i, sizeOfTile, sizeOfTile);
 			}
 		}
 		ctx.fillStyle = backCol;
@@ -283,10 +289,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	var drawBoardOnNext = function drawBoardOnNext() {
 		// drow board on next canvas
 		var backCol = ctxNext.fillStyle;
-		for (var _i3 = 0; _i3 < nOfColNext; _i3++) {
-			for (var _j3 = 0; _j3 < nOfRowsNext; _j3++) {
-				ctxNext.fillStyle = boardNext[_i3][_j3] || clear;
-				drawPointOnNext(_j3, _i3, sizeOfTile, sizeOfTile);
+		for (var i = 0; i < nOfColNext; i++) {
+			for (var j = 0; j < nOfRowsNext; j++) {
+				ctxNext.fillStyle = boardNext[i][j] || clear;
+				drawPointOnNext(j, i, sizeOfTile, sizeOfTile);
 			}
 		}
 		ctxNext.fillStyle = backCol;
@@ -333,11 +339,11 @@ document.addEventListener("DOMContentLoaded", function () {
 			key: 'detectColision',
 			value: function detectColision(xMove, yMove, sh) {
 				// Check for colision with walls and blocks
-				for (var _i4 = 0; _i4 < sh.length; _i4++) {
-					for (var _j4 = 0; _j4 < sh.length; _j4++) {
-						if (sh[_i4][_j4]) {
-							var x = this.x + _i4 + xMove;
-							var y = this.y + _j4 + yMove;
+				for (var i = 0; i < sh.length; i++) {
+					for (var j = 0; j < sh.length; j++) {
+						if (sh[i][j]) {
+							var x = this.x + i + xMove;
+							var y = this.y + j + yMove;
 							if (y >= numberOfColumns || x < 0 || x >= numberOfRows) {
 								return hitWall;
 							}
@@ -391,34 +397,34 @@ document.addEventListener("DOMContentLoaded", function () {
 			key: 'stopMove',
 			value: function stopMove() {
 				// Stops shape moving
-				for (var _i5 = 0; _i5 < this.firstShape.length; _i5++) {
-					for (var _j5 = 0; _j5 < this.firstShape.length; _j5++) {
-						if (this.y + _j5 < 0) {
+				for (var i = 0; i < this.firstShape.length; i++) {
+					for (var j = 0; j < this.firstShape.length; j++) {
+						if (this.y + j < 0) {
 							alert("Game Over!"); // Game over!
 							done = true;
 							clearInterval(timerId);
 							return;
 						}
-						if (!this.firstShape[_i5][_j5]) {
+						if (!this.firstShape[i][j]) {
 							continue;
 						}
-						board[this.y + _j5][this.x + _i5] = this.color;
+						board[this.y + j][this.x + i] = this.color;
 					}
 				}
 				var fullRow = 0; // Remove full row and add points
-				for (var _i6 = 0; _i6 < numberOfColumns; _i6++) {
+				for (var _i2 = 0; _i2 < numberOfColumns; _i2++) {
 					var _singleRow = true;
-					for (var _j6 = 0; _j6 < numberOfRows; _j6++) {
-						_singleRow = _singleRow && board[_i6][_j6] !== false;
+					for (var _j2 = 0; _j2 < numberOfRows; _j2++) {
+						_singleRow = _singleRow && board[_i2][_j2] !== false;
 					}
 					if (_singleRow) {
-						for (var i2 = _i6; i2 > 1; i2--) {
-							for (var _j7 = 0; _j7 < numberOfRows; _j7++) {
-								board[i2][_j7] = board[i2 - 1][_j7];
+						for (var i2 = _i2; i2 > 1; i2--) {
+							for (var _j3 = 0; _j3 < numberOfRows; _j3++) {
+								board[i2][_j3] = board[i2 - 1][_j3];
 							}
 						}
-						for (var _i7 = 0; _i7 < numberOfRows; _i7++) {
-							board[0][_i7] = false;
+						for (var _i3 = 0; _i3 < numberOfRows; _i3++) {
+							board[0][_i3] = false;
 						}
 						fullRow++;
 					}

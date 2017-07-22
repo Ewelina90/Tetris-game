@@ -49,29 +49,15 @@ document.addEventListener("DOMContentLoaded",function(){
 	let setStart = Date.now();
     let gameSpeed = 500;
     let level = 1;
-
     let board = [];								// Create game-board
-	for (let i = 0; i < numberOfColumns; i++) {
-		board[i] = [];
-		for (let j = 0; j < numberOfRows; j++) {
-			board[i][j] = false;
-		}
-	}
-
     let boardNext = [];								// Create board for next canvas
-	for (let i = 0; i < nOfColNext; i++) {
-		boardNext[i] = [];
-		for (let j = 0; j < nOfRowsNext; j++) {
-			boardNext[i][j] = false;
-		}
-	}
+
 
     const countTime = () => { 		// Start counting game time
 		const $min = $('#minutes');
 		const $sec = $('#seconds');
 		let minutes = 0;
 		let seconds = 0;
-
 		timerId = setInterval(function(){
 			seconds++;
 			if (seconds < 10){
@@ -97,6 +83,27 @@ document.addEventListener("DOMContentLoaded",function(){
 			return;
 		}
 		$playerName.text($setName);
+        clearInterval(timerId);
+        singleRow = 0;
+        level = 1;
+        score.textContent = singleRow;
+        gameLevel.textContent = level;
+
+        board = [];
+        for (let i = 0; i < numberOfColumns; i++) {
+    		board[i] = [];
+    		for (let j = 0; j < numberOfRows; j++) {
+    			board[i][j] = false;
+    		}
+    	}
+
+        boardNext = [];
+        for (let i = 0; i < nOfColNext; i++) {
+    		boardNext[i] = [];
+    		for (let j = 0; j < nOfRowsNext; j++) {
+    			boardNext[i][j] = false;
+    		}
+    	}
 		countTime();
         arrOfShapes[0] = newShape();
         arrOfShapes[1] = newShape();
@@ -148,7 +155,6 @@ document.addEventListener("DOMContentLoaded",function(){
     const startGame = () => {			// game loop
 		let now = Date.now();
 		let timer = now - setStart;
-
 		if (timer > gameSpeed) {
 			currentShape.moveDown();
             nextShape.drawOnBoardNext();
