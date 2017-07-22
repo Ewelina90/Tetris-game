@@ -127,9 +127,9 @@ document.addEventListener("DOMContentLoaded", function () {
 	var setStart = Date.now();
 	var gameSpeed = 500;
 	var level = 1;
-	var board = []; // Create game-board
-	var boardNext = []; // Create board for next canvas
-
+	var board = [];
+	var boardNext = [];
+	var gameOn = false;
 
 	var countTime = function countTime() {
 		// Start counting game time
@@ -160,27 +160,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	$playBtn.on('click', function (e) {
 		// Btn play - starts the game
-		var $setName = prompt('Type your name: ');
-		if ($setName === null) {
-			return;
-		}
-		$playerName.text($setName);
-		clearInterval(timerId);
-		singleRow = 0;
-		level = 1;
-		score.textContent = singleRow;
-		gameLevel.textContent = level;
+		if (gameOn === false) {
+			var $setName = prompt('Type your name: ');
+			if ($setName === null) {
+				return;
+			} else {
+				$playerName.text($setName);
+				gameOn = true;
+			}
+		} else {
+			var $newGame = confirm('Are you sure you want to start a new game?');
+			if ($newGame === true) {
+				clearInterval(timerId);
+				singleRow = 0;
+				level = 1;
+				score.textContent = singleRow;
+				gameLevel.textContent = level;
 
-		board = [];
+				board = [];
+				boardNext = [];
+			} else {
+				return;
+			}
+		}
+
 		for (var i = 0; i < numberOfColumns; i++) {
+			// Create game-board
 			board[i] = [];
 			for (var j = 0; j < numberOfRows; j++) {
 				board[i][j] = false;
 			}
 		}
 
-		boardNext = [];
 		for (var _i = 0; _i < nOfColNext; _i++) {
+			// Create board for next canvas
 			boardNext[_i] = [];
 			for (var _j = 0; _j < nOfRowsNext; _j++) {
 				boardNext[_i][_j] = false;

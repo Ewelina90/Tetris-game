@@ -49,8 +49,9 @@ document.addEventListener("DOMContentLoaded",function(){
 	let setStart = Date.now();
     let gameSpeed = 500;
     let level = 1;
-    let board = [];								// Create game-board
-    let boardNext = [];								// Create board for next canvas
+    let board = [];
+    let boardNext = [];
+    let gameOn = false;
 
 
     const countTime = () => { 		// Start counting game time
@@ -78,27 +79,38 @@ document.addEventListener("DOMContentLoaded",function(){
 	};
 
 	$playBtn.on('click',function(e){				// Btn play - starts the game
-		const $setName = prompt('Type your name: ');
-		if($setName === null){
-			return;
-		}
-		$playerName.text($setName);
-        clearInterval(timerId);
-        singleRow = 0;
-        level = 1;
-        score.textContent = singleRow;
-        gameLevel.textContent = level;
+        if(gameOn === false){
+            const $setName = prompt('Type your name: ');
+    		if($setName === null){
+    			return;
+    		}else{
+                $playerName.text($setName);
+                gameOn = true;
+            }
+        }else {
+            const $newGame = confirm('Are you sure you want to start a new game?');
+            if($newGame === true){
+                clearInterval(timerId);
+                singleRow = 0;
+                level = 1;
+                score.textContent = singleRow;
+                gameLevel.textContent = level;
 
-        board = [];
-        for (let i = 0; i < numberOfColumns; i++) {
+                board = [];
+                boardNext = [];
+            }else{
+                return;
+            }
+        }
+
+        for (let i = 0; i < numberOfColumns; i++) { // Create game-board
     		board[i] = [];
     		for (let j = 0; j < numberOfRows; j++) {
     			board[i][j] = false;
     		}
     	}
 
-        boardNext = [];
-        for (let i = 0; i < nOfColNext; i++) {
+        for (let i = 0; i < nOfColNext; i++) {  	// Create board for next canvas
     		boardNext[i] = [];
     		for (let j = 0; j < nOfRowsNext; j++) {
     			boardNext[i][j] = false;
