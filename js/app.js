@@ -34,6 +34,25 @@ document.addEventListener("DOMContentLoaded",function(){
     const rightBtn = document.querySelector('.arrow-buttons .right-btn');
     const downBtn = document.querySelector('.arrow-buttons .down-btn');
     const rotateBtn = document.querySelector('.rotate-btn button');
+    const soundBtn = document.querySelector('.sound-btn');
+    const pauseBtn = document.querySelector('.pause-btn');
+
+    const tetrisMusic = new Audio('./sounds/Tetris.mp3');
+    let musicOn = false;
+
+    soundBtn.addEventListener('click',function(e){
+        if(musicOn){
+            tetrisMusic.pause();
+            musicOn = false;
+        }else{
+            tetrisMusic.play();
+            musicOn = true;
+        }
+    });
+
+    pauseBtn.addEventListener('click',function(e){
+        alert('pause');
+    });
 
     let hitWall = 1;
 	let hitBlock = 2;
@@ -79,6 +98,8 @@ document.addEventListener("DOMContentLoaded",function(){
 	};
 
 	$playBtn.on('click',function(e){				// Btn play - starts the game
+        tetrisMusic.play();
+        musicOn = true;
         if(gameOn === false){
             const $setName = prompt('Type your name: ');
     		if($setName === null){
@@ -158,6 +179,8 @@ document.addEventListener("DOMContentLoaded",function(){
     rotateBtn.addEventListener("click", function(e){
         currentShape.rotate();
     });
+
+
 
     const newShape = () => {					// Get random shape
 		let randonShape = shapes[parseInt(Math.random() * shapes.length, 10)];

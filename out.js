@@ -112,6 +112,25 @@ document.addEventListener("DOMContentLoaded", function () {
 	var rightBtn = document.querySelector('.arrow-buttons .right-btn');
 	var downBtn = document.querySelector('.arrow-buttons .down-btn');
 	var rotateBtn = document.querySelector('.rotate-btn button');
+	var soundBtn = document.querySelector('.sound-btn');
+	var pauseBtn = document.querySelector('.pause-btn');
+
+	var tetrisMusic = new Audio('./sounds/Tetris.mp3');
+	var musicOn = false;
+
+	soundBtn.addEventListener('click', function (e) {
+		if (musicOn) {
+			tetrisMusic.pause();
+			musicOn = false;
+		} else {
+			tetrisMusic.play();
+			musicOn = true;
+		}
+	});
+
+	pauseBtn.addEventListener('click', function (e) {
+		alert('pause');
+	});
 
 	var hitWall = 1;
 	var hitBlock = 2;
@@ -160,6 +179,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	$playBtn.on('click', function (e) {
 		// Btn play - starts the game
+		tetrisMusic.play();
+		musicOn = true;
 		if (gameOn === false) {
 			var $setName = prompt('Type your name: ');
 			if ($setName === null) {
