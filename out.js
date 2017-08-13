@@ -103,11 +103,14 @@ document.addEventListener("DOMContentLoaded", function () {
 	canvasNext.width = nOfRowsNext * sizeOfTile;
 	canvasNext.height = nOfColNext * sizeOfTile;
 
+	// Information displays on gamepad screen
 	var $playBtn = $('.play-btn');
 	var $playerName = $('#player-name span');
 	var $gameTime = $('#game-time span');
 	var score = document.getElementById('score');
 	var gameLevel = document.getElementById('level');
+
+	// GamePad buttons
 	var leftBtn = document.querySelector('.arrow-buttons .left-btn');
 	var rightBtn = document.querySelector('.arrow-buttons .right-btn');
 	var downBtn = document.querySelector('.arrow-buttons .down-btn');
@@ -115,7 +118,12 @@ document.addEventListener("DOMContentLoaded", function () {
 	var soundBtn = document.querySelector('.sound-btn');
 	var pauseBtn = document.querySelector('.pause-btn');
 
+	// Sounds
 	var tetrisMusic = new Audio('./sounds/Tetris.mp3');
+	var touchDownMusic = new Audio('./sounds/SFX_PieceTouchDown.ogg');
+	var moveLRMusic = new Audio('./sounds/SFX_PieceMoveLR.ogg');
+	var rotateLRMusic = new Audio('./sounds/SFX_PieceRotateLR.ogg');
+	var lineClearMusic = new Audio('./sounds/SFX_SpecialLineClearTriple.ogg');
 	var musicOn = false;
 
 	soundBtn.addEventListener('click', function (e) {
@@ -179,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	$playBtn.on('click', function (e) {
 		// Btn play - starts the game
-		tetrisMusic.play();
+		// tetrisMusic.play();
 		musicOn = true;
 		if (gameOn === false) {
 			var $setName = prompt('Type your name: ');
@@ -236,6 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		switch (e.keyCode) {
 			case 38:
 				// up
+				rotateLRMusic.play();
 				currentShape.rotate();
 				break;
 			case 40:
@@ -244,10 +253,12 @@ document.addEventListener("DOMContentLoaded", function () {
 				break;
 			case 37:
 				// left
+				moveLRMusic.play();
 				currentShape.moveLeft();
 				break;
 			case 39:
 				// right
+				moveLRMusic.play();
 				currentShape.moveRight();
 			default:
 		};
@@ -385,6 +396,7 @@ document.addEventListener("DOMContentLoaded", function () {
 								continue;
 							}
 							if (board[y][x] !== false) {
+								touchDownMusic.play();
 								return hitBlock;
 							}
 						}
@@ -397,6 +409,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			key: 'moveDown',
 			value: function moveDown() {
 				if (this.detectColision(0, 1, this.firstShape)) {
+					touchDownMusic.play();
 					this.stopMove();
 					arrOfShapes[0] = arrOfShapes[1];
 					arrOfShapes[1] = newShape();
@@ -477,6 +490,7 @@ document.addEventListener("DOMContentLoaded", function () {
 					} else {
 						level;
 					}
+					lineClearMusic.play();
 					drawBoard();
 					score.textContent = singleRow;
 				}
@@ -604,7 +618,7 @@ exports = module.exports = __webpack_require__(5)(undefined);
 
 
 // module
-exports.push([module.i, ".container .row::before, .container .row::after, .tetris-game .game-board .game-pad .game-board-frame .game-board-main::after, .tetris-game .game-board .game-pad .game-board-frame .game-board-main::before {\n  display: block;\n  clear: both;\n  content: \"\";\n  height: 0;\n  visibility: hidden; }\n\n.tetris-game .game-board .game-controls .buttons-contener .horizontal-buttons button, .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons button, .tetris-game .game-board .game-controls .buttons-contener .rotate-btn button {\n  background: #ecd21e;\n  width: 60px;\n  height: 60px;\n  border-radius: 50%;\n  border: 1px solid gray;\n  box-shadow: 0px 8px 1px -1px rgba(255, 255, 255, 0.2) inset; }\n\n* {\n  box-sizing: border-box;\n  font-family: 'Play','Arial', sans-serif; }\n\nbody {\n  margin: 0;\n  padding: 0; }\n\n.container {\n  width: 100vw;\n  height: 100vh; }\n  .container .row {\n    width: 100%; }\n    .container .row .col-1 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n    .container .row .col-2 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n    .container .row .col-3 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n\n.tetris-game .game-info .info {\n  display: inline-block;\n  padding: 0 2em;\n  font-size: 1.3em; }\n\n.tetris-game .game-board {\n  background-color: #eae7e7;\n  width: 437px;\n  margin: 0 auto; }\n  .tetris-game .game-board .game-pad {\n    margin: 0 auto;\n    width: 437px;\n    height: 100vh;\n    background-color: #bebcbd;\n    border-radius: 10px;\n    box-shadow: 0px 0px 10px 1px #d7d6d7 inset; }\n    .tetris-game .game-board .game-pad h1 {\n      text-align: center;\n      color: blue;\n      position: relative;\n      top: 12px;\n      background: #bebcbd;\n      margin: 0 auto;\n      width: 5em;\n      padding: 0 12px;\n      letter-spacing: 1px; }\n    .tetris-game .game-board .game-pad .game-board-frame {\n      border: 7px solid #ecd21e;\n      width: 328px;\n      height: 390px;\n      padding: 26px;\n      margin: 0 auto; }\n      .tetris-game .game-board .game-pad .game-board-frame .game-board-main {\n        border: 4px solid #d2cdcd;\n        border-style: inset;\n        background-color: #97b289; }\n        .tetris-game .game-board .game-pad .game-board-frame .game-board-main .canvas {\n          float: left; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .canvas #canvas-main {\n            margin: 5px;\n            width: 150px;\n            height: 300px;\n            background-color: #97b289;\n            display: block;\n            border: 2px solid black; }\n        .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info {\n          float: left;\n          width: 94px;\n          text-align: center; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info p {\n            margin: 0;\n            padding: 0; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info .game-board-frame {\n            border: none;\n            width: 90px;\n            height: 90px;\n            padding: 10px;\n            margin: 0 auto; }\n            .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info .game-board-frame #canvas-next {\n              display: block;\n              border: 1px solid #000000;\n              width: 100%;\n              height: 100%;\n              background-color: #97b289; }\n  .tetris-game .game-board .game-controls .buttons-contener {\n    z-index: 4;\n    width: 320px;\n    height: 320px;\n    margin: 0 auto;\n    padding-top: 30px; }\n    .tetris-game .game-board .game-controls .buttons-contener .horizontal-buttons button {\n      width: 35px;\n      height: 35px;\n      margin-right: 20px;\n      font-size: 14px; }\n    .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons {\n      padding-top: 20px;\n      position: relative;\n      width: 60%; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons button {\n        position: absolute; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons .left-btn {\n        left: 0; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons .down-btn {\n        top: 70px;\n        left: 60px; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons .right-btn {\n        right: 10px; }\n    .tetris-game .game-board .game-controls .buttons-contener .rotate-btn {\n      width: 40%;\n      float: right;\n      text-align: right;\n      position: relative;\n      top: -20px; }\n      .tetris-game .game-board .game-controls .buttons-contener .rotate-btn button {\n        width: 110px;\n        height: 110px; }\n", ""]);
+exports.push([module.i, ".container .row::before, .container .row::after, .tetris-game .game-board .game-pad .game-board-frame .game-board-main::after, .tetris-game .game-board .game-pad .game-board-frame .game-board-main::before {\n  display: block;\n  clear: both;\n  content: \"\";\n  height: 0;\n  visibility: hidden; }\n\n.tetris-game .game-board .game-controls .buttons-contener .horizontal-buttons button, .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons button, .tetris-game .game-board .game-controls .buttons-contener .rotate-btn button {\n  background: #ecd21e;\n  width: 60px;\n  height: 60px;\n  border-radius: 50%;\n  border: 1px solid gray;\n  box-shadow: 0px 8px 1px -1px rgba(255, 255, 255, 0.2) inset, 0px 0px 2px 0px grey; }\n  .tetris-game .game-board .game-controls .buttons-contener .horizontal-buttons button:focus, .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons button:focus, .tetris-game .game-board .game-controls .buttons-contener .rotate-btn button:focus {\n    outline: 0;\n    box-shadow: 0px 0px 4px 0px grey inset; }\n\n* {\n  box-sizing: border-box;\n  font-family: 'Play','Arial', sans-serif; }\n\nbody {\n  margin: 0;\n  padding: 0; }\n\n.container {\n  width: 100vw;\n  height: 100vh; }\n  .container .row {\n    width: 100%; }\n    .container .row .col-1 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n    .container .row .col-2 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n    .container .row .col-3 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n\n.tetris-game .game-info .info {\n  display: inline-block;\n  padding: 0 2em;\n  font-size: 1.3em; }\n\n.tetris-game .game-board {\n  background-color: #eae7e7;\n  width: 437px;\n  margin: 0 auto; }\n  .tetris-game .game-board .game-pad {\n    margin: 0 auto;\n    width: 437px;\n    height: 100vh;\n    background-color: #bebcbd;\n    border-radius: 10px;\n    box-shadow: 0px 0px 10px 1px #d7d6d7 inset; }\n    .tetris-game .game-board .game-pad h1 {\n      text-align: center;\n      color: blue;\n      position: relative;\n      top: 12px;\n      background: #bebcbd;\n      margin: 0 auto;\n      width: 5em;\n      padding: 0 12px;\n      letter-spacing: 1px; }\n    .tetris-game .game-board .game-pad .game-board-frame {\n      border: 7px solid #ecd21e;\n      width: 328px;\n      height: 390px;\n      padding: 26px;\n      margin: 0 auto; }\n      .tetris-game .game-board .game-pad .game-board-frame .game-board-main {\n        border: 4px solid #d2cdcd;\n        border-style: inset;\n        background-color: #97b289; }\n        .tetris-game .game-board .game-pad .game-board-frame .game-board-main .canvas {\n          float: left; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .canvas #canvas-main {\n            margin: 5px;\n            width: 150px;\n            height: 300px;\n            background-color: #97b289;\n            display: block;\n            border: 2px solid black; }\n        .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info {\n          float: left;\n          width: 94px;\n          text-align: center; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info p {\n            margin: 0;\n            padding: 0; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info .game-board-frame {\n            border: none;\n            width: 90px;\n            height: 90px;\n            padding: 10px;\n            margin: 0 auto; }\n            .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info .game-board-frame #canvas-next {\n              display: block;\n              border: 1px solid #000000;\n              width: 100%;\n              height: 100%;\n              background-color: #97b289; }\n  .tetris-game .game-board .game-controls .buttons-contener {\n    z-index: 4;\n    width: 320px;\n    height: 320px;\n    margin: 0 auto;\n    padding-top: 30px; }\n    .tetris-game .game-board .game-controls .buttons-contener .horizontal-buttons button {\n      width: 35px;\n      height: 35px;\n      margin-right: 20px;\n      font-size: 14px; }\n    .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons {\n      padding-top: 20px;\n      position: relative;\n      width: 60%; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons button {\n        position: absolute; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons .left-btn {\n        left: 0; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons .down-btn {\n        top: 70px;\n        left: 60px; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons .right-btn {\n        right: 10px; }\n    .tetris-game .game-board .game-controls .buttons-contener .rotate-btn {\n      width: 40%;\n      float: right;\n      text-align: right;\n      position: relative;\n      top: -20px; }\n      .tetris-game .game-board .game-controls .buttons-contener .rotate-btn button {\n        width: 110px;\n        height: 110px; }\n", ""]);
 
 // exports
 

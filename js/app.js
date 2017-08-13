@@ -25,11 +25,14 @@ document.addEventListener("DOMContentLoaded",function(){
     canvasNext.width = nOfRowsNext * sizeOfTile;
     canvasNext.height = nOfColNext * sizeOfTile;
 
+    // Information displays on gamepad screen
     const $playBtn = $('.play-btn');
 	const $playerName = $('#player-name span');
 	const $gameTime = $('#game-time span');
     const score = document.getElementById('score');
     const gameLevel = document.getElementById('level');
+
+    // GamePad buttons
     const leftBtn = document.querySelector('.arrow-buttons .left-btn');
     const rightBtn = document.querySelector('.arrow-buttons .right-btn');
     const downBtn = document.querySelector('.arrow-buttons .down-btn');
@@ -37,7 +40,12 @@ document.addEventListener("DOMContentLoaded",function(){
     const soundBtn = document.querySelector('.sound-btn');
     const pauseBtn = document.querySelector('.pause-btn');
 
+    // Sounds
     const tetrisMusic = new Audio('./sounds/Tetris.mp3');
+    const touchDownMusic = new Audio('./sounds/SFX_PieceTouchDown.ogg');
+    const moveLRMusic = new Audio('./sounds/SFX_PieceMoveLR.ogg');
+    const rotateLRMusic = new Audio('./sounds/SFX_PieceRotateLR.ogg');
+    const lineClearMusic = new Audio('./sounds/SFX_SpecialLineClearTriple.ogg');
     let musicOn = false;
 
     soundBtn.addEventListener('click',function(e){
@@ -98,7 +106,7 @@ document.addEventListener("DOMContentLoaded",function(){
 	};
 
 	$playBtn.on('click',function(e){				// Btn play - starts the game
-        tetrisMusic.play();
+        // tetrisMusic.play();
         musicOn = true;
         if(gameOn === false){
             const $setName = prompt('Type your name: ');
@@ -153,16 +161,19 @@ document.addEventListener("DOMContentLoaded",function(){
 		e.preventDefault();
 		switch (e.keyCode) {
 			case 38:					// up
+                rotateLRMusic.play();
 				currentShape.rotate();
 				break;
 			case 40:					// down
 				currentShape.moveDown();
 				break;
 			case 37:					// left
+                moveLRMusic.play();
 				currentShape.moveLeft();
 				break;
 			case 39:					// right
-				currentShape.moveRight();
+                moveLRMusic.play();
+                currentShape.moveRight();
 			default:
 		};
 	});
@@ -286,7 +297,10 @@ document.addEventListener("DOMContentLoaded",function(){
 							return hitWall;
 						}
 						if (y < 0) { continue; }
-						if (board[y][x] !== false) { return hitBlock; }
+						if (board[y][x] !== false) {
+                            touchDownMusic.play();
+                            return hitBlock;
+                        }
 					}
 					continue;
 				}
@@ -296,6 +310,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
 		moveDown(){
 			if (this.detectColision(0, 1, this.firstShape)) {
+                touchDownMusic.play();
 				this.stopMove();
                 arrOfShapes[0] = arrOfShapes[1];
                 arrOfShapes[1] = newShape();
@@ -373,6 +388,7 @@ document.addEventListener("DOMContentLoaded",function(){
                 }else{
                     level;
                 }
+                lineClearMusic.play();
 				drawBoard();
 				score.textContent = singleRow;
 			}
