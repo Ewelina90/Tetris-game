@@ -46,15 +46,27 @@ document.addEventListener("DOMContentLoaded",function(){
     const moveLRMusic = new Audio('./sounds/SFX_PieceMoveLR.ogg');
     const rotateLRMusic = new Audio('./sounds/SFX_PieceRotateLR.ogg');
     const lineClearMusic = new Audio('./sounds/SFX_SpecialLineClearTriple.ogg');
-    let musicOn = false;
+    let musicOn = true;
+    tetrisMusic.play();
 
     soundBtn.addEventListener('click',function(e){
+        const icon = this.firstElementChild.classList;
         if(musicOn){
             tetrisMusic.pause();
             musicOn = false;
+            console.log(this);
+            icon.remove("fa-volume-up");
+            icon.add("fa-volume-off");
+        }else if(gameOn){
+            tetrisMusic.pause();
+            musicOn = true;
+            icon.remove("fa-volume-off");
+            icon.add("fa-volume-up");
         }else{
             tetrisMusic.play();
             musicOn = true;
+            icon.remove("fa-volume-off");
+            icon.add("fa-volume-up");
         }
     });
 
@@ -106,8 +118,6 @@ document.addEventListener("DOMContentLoaded",function(){
 	};
 
 	$playBtn.on('click',function(e){				// Btn play - starts the game
-        // tetrisMusic.play();
-        musicOn = true;
         if(gameOn === false){
             const $setName = prompt('Type your name: ');
     		if($setName === null){
@@ -115,6 +125,7 @@ document.addEventListener("DOMContentLoaded",function(){
     		}else{
                 $playerName.text($setName);
                 gameOn = true;
+                tetrisMusic.pause();
             }
         }else {
             const $newGame = confirm('Are you sure you want to start a new game?');
@@ -161,18 +172,27 @@ document.addEventListener("DOMContentLoaded",function(){
 		e.preventDefault();
 		switch (e.keyCode) {
 			case 38:					// up
-                rotateLRMusic.play();
+                if(musicOn){
+                    rotateLRMusic.play();
+                }
 				currentShape.rotate();
 				break;
 			case 40:					// down
-				currentShape.moveDown();
+                if(musicOn){
+                    moveLRMusic.play();
+                }
+                currentShape.moveDown();
 				break;
 			case 37:					// left
-                moveLRMusic.play();
+                if(musicOn){
+                    moveLRMusic.play();
+                }
 				currentShape.moveLeft();
 				break;
 			case 39:					// right
-                moveLRMusic.play();
+                if(musicOn){
+                    moveLRMusic.play();
+                }
                 currentShape.moveRight();
 			default:
 		};
@@ -298,7 +318,9 @@ document.addEventListener("DOMContentLoaded",function(){
 						}
 						if (y < 0) { continue; }
 						if (board[y][x] !== false) {
-                            touchDownMusic.play();
+                            if(musicOn){
+                                touchDownMusic.play();
+                            }
                             return hitBlock;
                         }
 					}
@@ -310,7 +332,9 @@ document.addEventListener("DOMContentLoaded",function(){
 
 		moveDown(){
 			if (this.detectColision(0, 1, this.firstShape)) {
-                touchDownMusic.play();
+                if(musicOn){
+                    touchDownMusic.play();
+                }
 				this.stopMove();
                 arrOfShapes[0] = arrOfShapes[1];
                 arrOfShapes[1] = newShape();
@@ -388,7 +412,9 @@ document.addEventListener("DOMContentLoaded",function(){
                 }else{
                     level;
                 }
-                lineClearMusic.play();
+                if(musicOn){
+                    lineClearMusic.play();
+                }
 				drawBoard();
 				score.textContent = singleRow;
 			}
