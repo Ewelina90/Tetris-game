@@ -104,9 +104,9 @@ document.addEventListener("DOMContentLoaded", function () {
 	canvasNext.height = nOfColNext * sizeOfTile;
 
 	// Information displays on gamepad screen
-	var $playBtn = $('.play-btn');
-	var $playerName = $('#player-name span');
-	var $gameTime = $('#game-time span');
+	var playBtn = document.querySelector('.play-btn');
+	var playerName = document.querySelector('#player-name span');
+	// const gameTime = document.querySelector('#game-time span');
 	var score = document.getElementById('score');
 	var gameLevel = document.getElementById('level');
 
@@ -132,7 +132,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		if (musicOn) {
 			tetrisMusic.pause();
 			musicOn = false;
-			console.log(this);
 			icon.remove("fa-volume-up");
 			icon.add("fa-volume-off");
 		} else if (gameOn) {
@@ -172,45 +171,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	var countTime = function countTime() {
 		// Start counting game time
-		var $min = $('#minutes');
-		var $sec = $('#seconds');
+		var min = document.querySelector('#minutes');
+		var sec = document.querySelector('#seconds');
 		var minutes = 0;
 		var seconds = 0;
 		timerId = setInterval(function () {
 			seconds++;
 			if (seconds < 10) {
-				$sec.text('0' + seconds);
+				sec.innerText = '0' + seconds;
 			} else if (seconds > 59) {
 				seconds = 0;
-				$sec.text('0' + seconds);
+				sec.innerText = '0' + seconds;
 				minutes++;
 				if (minutes < 10) {
-					$min.text('0' + minutes);
+					min.innerText = '0' + minutes;
 				} else if (minutes > 59) {
 					var timeout = alert('Game over!');
 				} else {
-					$min.text(minutes);
+					min.innerText = minutes;
 				}
 			} else {
-				$sec.text(seconds);
+				sec.innerText = seconds;
 			}
 		}, 1000);
 	};
 
-	$playBtn.on('click', function (e) {
+	playBtn.addEventListener('click', function (e) {
 		// Btn play - starts the game
 		if (gameOn === false) {
-			var $setName = prompt('Type your name: ');
-			if ($setName === null) {
+			var setName = prompt('Type your name: ');
+			if (setName === null) {
 				return;
 			} else {
-				$playerName.text($setName);
+				playerName.innerText = setName;
 				gameOn = true;
 				tetrisMusic.pause();
 			}
 		} else {
-			var $newGame = confirm('Are you sure you want to start a new game?');
-			if ($newGame === true) {
+			var newGame = confirm('Are you sure you want to start a new game?');
+			if (newGame === true) {
 				clearInterval(timerId);
 				singleRow = 0;
 				level = 1;
