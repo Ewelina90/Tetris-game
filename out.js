@@ -124,32 +124,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	var moveLRMusic = new Audio('./sounds/SFX_PieceMoveLR.ogg');
 	var rotateLRMusic = new Audio('./sounds/SFX_PieceRotateLR.ogg');
 	var lineClearMusic = new Audio('./sounds/SFX_SpecialLineClearTriple.ogg');
+
+	var animationFrameId = 0;
+	var pause = false;
 	var musicOn = true;
-	tetrisMusic.play();
-
-	soundBtn.addEventListener('click', function (e) {
-		var icon = this.firstElementChild.classList;
-		if (musicOn) {
-			tetrisMusic.pause();
-			musicOn = false;
-			icon.remove("fa-volume-up");
-			icon.add("fa-volume-off");
-		} else if (gameOn) {
-			tetrisMusic.pause();
-			musicOn = true;
-			icon.remove("fa-volume-off");
-			icon.add("fa-volume-up");
-		} else {
-			tetrisMusic.play();
-			musicOn = true;
-			icon.remove("fa-volume-off");
-			icon.add("fa-volume-up");
-		}
-	});
-
-	pauseBtn.addEventListener('click', function (e) {
-		alert('pause');
-	});
 
 	var hitWall = 1;
 	var hitBlock = 2;
@@ -173,8 +151,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		// Start counting game time
 		var min = document.querySelector('#minutes');
 		var sec = document.querySelector('#seconds');
-		var minutes = 0;
-		var seconds = 0;
+		var minutes = parseInt(min.textContent);
+		var seconds = parseInt(sec.textContent);
 		timerId = setInterval(function () {
 			seconds++;
 			if (seconds < 10) {
@@ -249,6 +227,41 @@ document.addEventListener("DOMContentLoaded", function () {
 		startGame();
 	});
 
+	tetrisMusic.play();
+
+	soundBtn.addEventListener('click', function (e) {
+		var icon = this.firstElementChild.classList;
+		if (musicOn) {
+			tetrisMusic.pause();
+			musicOn = false;
+			icon.remove("fa-volume-up");
+			icon.add("fa-volume-off");
+		} else if (gameOn) {
+			tetrisMusic.pause();
+			musicOn = true;
+			icon.remove("fa-volume-off");
+			icon.add("fa-volume-up");
+		} else {
+			tetrisMusic.play();
+			musicOn = true;
+			icon.remove("fa-volume-off");
+			icon.add("fa-volume-up");
+		}
+	});
+
+	pauseBtn.addEventListener('click', function (e) {
+		if (pause) {
+			pause = false;
+			countTime();
+			startGame();
+		} else {
+			cancelAnimationFrame(animationFrameId);
+			console.log(timerId);
+			clearInterval(timerId);
+			pause = true;
+		}
+	});
+
 	document.body.addEventListener("keydown", function (e) {
 		e.preventDefault();
 		switch (e.keyCode) {
@@ -312,7 +325,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			setStart = now;
 		}
 		if (!done) {
-			requestAnimationFrame(startGame);
+			animationFrameId = requestAnimationFrame(startGame);
 		}
 	};
 

@@ -46,32 +46,10 @@ document.addEventListener("DOMContentLoaded",function(){
     const moveLRMusic = new Audio('./sounds/SFX_PieceMoveLR.ogg');
     const rotateLRMusic = new Audio('./sounds/SFX_PieceRotateLR.ogg');
     const lineClearMusic = new Audio('./sounds/SFX_SpecialLineClearTriple.ogg');
+
+    let animationFrameId = 0;
+    let pause = false;
     let musicOn = true;
-    tetrisMusic.play();
-
-    soundBtn.addEventListener('click',function(e){
-        const icon = this.firstElementChild.classList;
-        if(musicOn){
-            tetrisMusic.pause();
-            musicOn = false;
-            icon.remove("fa-volume-up");
-            icon.add("fa-volume-off");
-        }else if(gameOn){
-            tetrisMusic.pause();
-            musicOn = true;
-            icon.remove("fa-volume-off");
-            icon.add("fa-volume-up");
-        }else{
-            tetrisMusic.play();
-            musicOn = true;
-            icon.remove("fa-volume-off");
-            icon.add("fa-volume-up");
-        }
-    });
-
-    pauseBtn.addEventListener('click',function(e){
-        alert('pause');
-    });
 
     let hitWall = 1;
 	let hitBlock = 2;
@@ -95,8 +73,8 @@ document.addEventListener("DOMContentLoaded",function(){
     const countTime = () => { 		// Start counting game time
 		const min = document.querySelector('#minutes');
 		const sec = document.querySelector('#seconds');
-		let minutes = 0;
-		let seconds = 0;
+		let minutes = parseInt(min.textContent);
+		let seconds = parseInt(sec.textContent);
 		timerId = setInterval(function(){
 			seconds++;
 			if (seconds < 10){
@@ -164,8 +142,42 @@ document.addEventListener("DOMContentLoaded",function(){
 	    drawBoard();
         drawBoardOnNext();
 		startGame();
-
 	});
+
+    tetrisMusic.play();
+
+    soundBtn.addEventListener('click',function(e){
+        const icon = this.firstElementChild.classList;
+        if(musicOn){
+            tetrisMusic.pause();
+            musicOn = false;
+            icon.remove("fa-volume-up");
+            icon.add("fa-volume-off");
+        }else if(gameOn){
+            tetrisMusic.pause();
+            musicOn = true;
+            icon.remove("fa-volume-off");
+            icon.add("fa-volume-up");
+        }else{
+            tetrisMusic.play();
+            musicOn = true;
+            icon.remove("fa-volume-off");
+            icon.add("fa-volume-up");
+        }
+    });
+
+    pauseBtn.addEventListener('click',function(e){
+        if(pause){
+            pause = false;
+            countTime();
+            startGame();
+        }else{
+            cancelAnimationFrame(animationFrameId);
+            console.log(timerId);
+            clearInterval(timerId);
+            pause = true;
+        }
+    });
 
     document.body.addEventListener("keydown", function (e) {
 		e.preventDefault();
@@ -226,7 +238,7 @@ document.addEventListener("DOMContentLoaded",function(){
 			setStart = now;
 		}
 		if (!done) {
-			requestAnimationFrame(startGame);
+			animationFrameId = requestAnimationFrame(startGame);
 		}
 	};
 
