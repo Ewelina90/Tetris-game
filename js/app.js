@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded",function(){
 
     const canvasNext = document.getElementById('canvas-next');
     const ctxNext = canvasNext.getContext("2d");
-    const nOfRowsNext = 6;
-    const nOfColNext = 6;
+    const nOfRowsNext = 4;
+    const nOfColNext = 4;
 
     canvasNext.width = nOfRowsNext * sizeOfTile;
     canvasNext.height = nOfColNext * sizeOfTile;
@@ -138,7 +138,6 @@ document.addEventListener("DOMContentLoaded",function(){
 		countTime();
         arrOfShapes[0] = newShape();
         arrOfShapes[1] = newShape();
-            // console.log(arrOfShapes);
 		currentShape = arrOfShapes[0];
         nextShape = arrOfShapes[1];
 	    drawBoard();
