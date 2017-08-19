@@ -191,6 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				clearInterval(timerId);
 				singleRow = 0;
 				level = 1;
+				done = false;
 				score.textContent = singleRow;
 				gameLevel.textContent = level;
 
