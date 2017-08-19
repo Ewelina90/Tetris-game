@@ -70,11 +70,11 @@ document.addEventListener("DOMContentLoaded",function(){
     let gameOn = false;
 
 
-    const countTime = () => { 		// Start counting game time
+    const countTime = (a = 0,b = 0) => { 		// Start counting game time
 		const min = document.querySelector('#minutes');
 		const sec = document.querySelector('#seconds');
-		let minutes = parseInt(min.textContent);
-		let seconds = parseInt(sec.textContent);
+		let minutes = a;
+		let seconds = b;
 		timerId = setInterval(function(){
 			seconds++;
 			if (seconds < 10){
@@ -108,6 +108,7 @@ document.addEventListener("DOMContentLoaded",function(){
             const newGame = confirm('Are you sure you want to start a new game?');
             if(newGame === true){
                 clearInterval(timerId);
+                cancelAnimationFrame(animationFrameId);
                 singleRow = 0;
                 level = 1;
                 done = false;
@@ -168,13 +169,16 @@ document.addEventListener("DOMContentLoaded",function(){
     });
 
     pauseBtn.addEventListener('click',function(e){
+        const min = document.querySelector('#minutes');
+		const sec = document.querySelector('#seconds');
+		let a = parseInt(min.textContent);
+		let b = parseInt(sec.textContent);
         if(pause){
             pause = false;
-            countTime();
+            countTime(a,b);
             startGame();
         }else{
             cancelAnimationFrame(animationFrameId);
-            console.log(timerId);
             clearInterval(timerId);
             pause = true;
         }
