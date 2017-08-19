@@ -145,6 +145,9 @@ document.addEventListener("DOMContentLoaded",function(){
         drawBoardOnNext();
 		startGame();
 	});
+    playBtn.addEventListener('mouseup',function(e){
+        this.blur();
+    });
 
     tetrisMusic.play();
 
@@ -167,6 +170,9 @@ document.addEventListener("DOMContentLoaded",function(){
             icon.add("fa-volume-up");
         }
     });
+    soundBtn.addEventListener('mouseup',function(e){
+        this.blur();
+    });
 
     pauseBtn.addEventListener('click',function(e){
         const min = document.querySelector('#minutes');
@@ -182,6 +188,9 @@ document.addEventListener("DOMContentLoaded",function(){
             clearInterval(timerId);
             pause = true;
         }
+    });
+    pauseBtn.addEventListener('mouseup',function(e){
+        this.blur();
     });
 
     document.body.addEventListener("keydown", function (e) {
@@ -217,14 +226,26 @@ document.addEventListener("DOMContentLoaded",function(){
     leftBtn.addEventListener("click", function(e){
         currentShape.moveLeft();
     });
+    leftBtn.addEventListener('mouseup',function(e){
+        this.blur();
+    });
     rightBtn.addEventListener("click", function(e){
         currentShape.moveRight();
+    });
+    rightBtn.addEventListener('mouseup',function(e){
+        this.blur();
     });
     downBtn.addEventListener("click", function(e){
         currentShape.moveDown();
     });
+    downBtn.addEventListener('mouseup',function(e){
+        this.blur();
+    });
     rotateBtn.addEventListener("click", function(e){
         currentShape.rotate();
+    });
+    rotateBtn.addEventListener('mouseup',function(e){
+        this.blur();
     });
 
 
