@@ -68,7 +68,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
-module.exports = __webpack_require__(3);
+module.exports = __webpack_require__(2);
 
 
 /***/ }),
@@ -80,586 +80,617 @@ module.exports = __webpack_require__(3);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _shapes = __webpack_require__(2);
+var _shapes = __webpack_require__(7);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var config = {
+    apiKey: "AIzaSyC7T5R2opJNWtT6-fQ-KXcI8PRxGLwfnt0",
+    databaseURL: "https://tetris-555a0.firebaseio.com"
+};
+var app = firebase.initializeApp(config);
+
 document.addEventListener("DOMContentLoaded", function () {
-	var canvas = document.getElementById('canvas-main');
-	var ctx = canvas.getContext("2d");
-	var clear = '#97b289';
-	var numberOfRows = 10;
-	var numberOfColumns = 20;
-	var sizeOfTile = 15;
+    var canvas = document.getElementById('canvas-main');
+    var ctx = canvas.getContext("2d");
+    var clear = '#97b289';
+    var numberOfRows = 10;
+    var numberOfColumns = 20;
+    var sizeOfTile = 15;
 
-	canvas.width = numberOfRows * sizeOfTile;
-	canvas.height = numberOfColumns * sizeOfTile;
+    canvas.width = numberOfRows * sizeOfTile;
+    canvas.height = numberOfColumns * sizeOfTile;
 
-	var canvasNext = document.getElementById('canvas-next');
-	var ctxNext = canvasNext.getContext("2d");
-	var nOfRowsNext = 4;
-	var nOfColNext = 4;
+    var canvasNext = document.getElementById('canvas-next');
+    var ctxNext = canvasNext.getContext("2d");
+    var nOfRowsNext = 4;
+    var nOfColNext = 4;
 
-	canvasNext.width = nOfRowsNext * sizeOfTile;
-	canvasNext.height = nOfColNext * sizeOfTile;
+    canvasNext.width = nOfRowsNext * sizeOfTile;
+    canvasNext.height = nOfColNext * sizeOfTile;
 
-	// Information displays on gamepad screen
-	var startPage = document.querySelector('.start-game-info');
-	var playBtn = document.querySelector('.play-btn');
-	var playerName = document.querySelector('#player-name span');
-	// const gameTime = document.querySelector('#game-time span');
-	var score = document.getElementById('score');
-	var gameLevel = document.getElementById('level');
+    // Information displays on gamepad screen
+    var startPage = document.querySelector('.start-game-info');
+    var playBtn = document.querySelector('.play-btn');
+    var playerName = document.querySelector('#player-name span');
+    // const gameTime = document.querySelector('#game-time span');
+    var score = document.getElementById('score');
+    var gameLevel = document.getElementById('level');
 
-	// GamePad buttons
-	var leftBtn = document.querySelector('.arrow-buttons .left-btn');
-	var rightBtn = document.querySelector('.arrow-buttons .right-btn');
-	var downBtn = document.querySelector('.arrow-buttons .down-btn');
-	var rotateBtn = document.querySelector('.rotate-btn button');
-	var soundBtn = document.querySelector('.sound-btn');
-	var pauseBtn = document.querySelector('.pause-btn');
+    // GamePad buttons
+    var leftBtn = document.querySelector('.arrow-buttons .left-btn');
+    var rightBtn = document.querySelector('.arrow-buttons .right-btn');
+    var downBtn = document.querySelector('.arrow-buttons .down-btn');
+    var rotateBtn = document.querySelector('.rotate-btn button');
+    var soundBtn = document.querySelector('.sound-btn');
+    var pauseBtn = document.querySelector('.pause-btn');
 
-	// Sounds
-	var tetrisMusic = new Audio('./sounds/Tetris.mp3');
-	var touchDownMusic = new Audio('./sounds/SFX_PieceTouchDown.ogg');
-	var moveLRMusic = new Audio('./sounds/SFX_PieceMoveLR.ogg');
-	var rotateLRMusic = new Audio('./sounds/SFX_PieceRotateLR.ogg');
-	var lineClearMusic = new Audio('./sounds/SFX_SpecialLineClearTriple.ogg');
+    // Sounds
+    var tetrisMusic = new Audio('./sounds/Tetris.mp3');
+    var touchDownMusic = new Audio('./sounds/SFX_PieceTouchDown.ogg');
+    var moveLRMusic = new Audio('./sounds/SFX_PieceMoveLR.ogg');
+    var rotateLRMusic = new Audio('./sounds/SFX_PieceRotateLR.ogg');
+    var lineClearMusic = new Audio('./sounds/SFX_SpecialLineClearTriple.ogg');
 
-	var animationFrameId = 0;
-	var pause = false;
-	var musicOn = true;
+    var animationFrameId = 0;
+    var pause = false;
+    var musicOn = true;
 
-	var hitWall = 1;
-	var hitBlock = 2;
-	var singleRow = 0;
-	var done = false;
-	var timerId = 0;
+    var hitWall = 1;
+    var hitBlock = 2;
+    var singleRow = 0;
+    var done = false;
+    var timerId = 0;
 
-	var shapes = [[_shapes.I, "#0ff"], [_shapes.J, "#a0f"], [_shapes.L, "#ffa500"], [_shapes.O, "#0000ff"], [_shapes.S, "#f00"], [_shapes.T, "#0f0"], [_shapes.Z, "#ff0"]];
+    var shapes = [[_shapes.I, "#0ff"], [_shapes.J, "#a0f"], [_shapes.L, "#ffa500"], [_shapes.O, "#0000ff"], [_shapes.S, "#f00"], [_shapes.T, "#0f0"], [_shapes.Z, "#ff0"]];
 
-	var arrOfShapes = ['', ''];
-	var currentShape = null;
-	var nextShape = null;
-	var setStart = Date.now();
-	var gameSpeed = 500;
-	var level = 1;
-	var board = [];
-	var boardNext = [];
-	var gameOn = false;
+    var arrOfShapes = ['', ''];
+    var currentShape = null;
+    var nextShape = null;
+    var setStart = Date.now();
+    var gameSpeed = 500;
+    var level = 1;
+    var board = [];
+    var boardNext = [];
+    var gameOn = false;
 
-	var countTime = function countTime() {
-		var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-		var b = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-		// Start counting game time
-		var min = document.querySelector('#minutes');
-		var sec = document.querySelector('#seconds');
-		var minutes = a;
-		var seconds = b;
-		timerId = setInterval(function () {
-			seconds++;
-			if (seconds < 10) {
-				sec.innerText = '0' + seconds;
-			} else if (seconds > 59) {
-				seconds = 0;
-				sec.innerText = '0' + seconds;
-				minutes++;
-				if (minutes < 10) {
-					min.innerText = '0' + minutes;
-				} else if (minutes > 59) {
-					var timeout = alert('Game over!');
-				} else {
-					min.innerText = minutes;
-				}
-			} else {
-				sec.innerText = seconds;
-			}
-		}, 1000);
-	};
+    var countTime = function countTime() {
+        var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        var b = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+        // Start counting game time
+        var min = document.querySelector('#minutes');
+        var sec = document.querySelector('#seconds');
+        var minutes = a;
+        var seconds = b;
+        timerId = setInterval(function () {
+            seconds++;
+            if (seconds < 10) {
+                sec.innerText = '0' + seconds;
+            } else if (seconds > 59) {
+                seconds = 0;
+                sec.innerText = '0' + seconds;
+                minutes++;
+                if (minutes < 10) {
+                    min.innerText = '0' + minutes;
+                } else if (minutes > 59) {
+                    //   gameOver();
+                } else {
+                    min.innerText = minutes;
+                }
+            } else {
+                sec.innerText = seconds;
+            }
+        }, 1000);
+    };
 
-	var playTheGame = function playTheGame() {
-		startPage.style.display = "none";
-		if (gameOn === false) {
-			var setName = prompt('Type your name: ');
-			if (setName === null) {
-				return;
-			} else {
-				playerName.innerText = setName;
-				gameOn = true;
-				tetrisMusic.pause();
-			}
-		} else {
-			var newGame = confirm('Are you sure you want to start a new game?');
-			if (newGame === true) {
-				clearInterval(timerId);
-				cancelAnimationFrame(animationFrameId);
-				singleRow = 0;
-				level = 1;
-				done = false;
-				score.textContent = singleRow;
-				gameLevel.textContent = level;
+    var playTheGame = function playTheGame() {
+        startPage.style.display = "none";
+        if (gameOn === false) {
+            // const setName = prompt('Type your name: ');
+            // if(setName === null){
+            // 	return;
+            // }else{
+            //     playerName.innerText = setName;
+            gameOn = true;
+            tetrisMusic.pause();
+            // }
+        } else {
+            var newGame = confirm('Are you sure you want to start a new game?');
+            if (newGame === true) {
+                clearInterval(timerId);
+                cancelAnimationFrame(animationFrameId);
+                singleRow = 0;
+                level = 1;
+                done = false;
+                score.textContent = singleRow;
+                gameLevel.textContent = level;
 
-				board = [];
-				boardNext = [];
-			} else {
-				return;
-			}
-		}
+                board = [];
+                boardNext = [];
+            } else {
+                return;
+            }
+        }
 
-		for (var i = 0; i < numberOfColumns; i++) {
-			// Create game-board
-			board[i] = [];
-			for (var j = 0; j < numberOfRows; j++) {
-				board[i][j] = false;
-			}
-		}
+        for (var i = 0; i < numberOfColumns; i++) {
+            // Create game-board
+            board[i] = [];
+            for (var j = 0; j < numberOfRows; j++) {
+                board[i][j] = false;
+            }
+        }
 
-		for (var _i = 0; _i < nOfColNext; _i++) {
-			// Create board for next canvas
-			boardNext[_i] = [];
-			for (var _j = 0; _j < nOfRowsNext; _j++) {
-				boardNext[_i][_j] = false;
-			}
-		}
-		countTime();
-		arrOfShapes[0] = newShape();
-		arrOfShapes[1] = newShape();
-		currentShape = arrOfShapes[0];
-		nextShape = arrOfShapes[1];
-		drawBoard();
-		drawBoardOnNext();
-		startGame();
-	};
+        for (var _i = 0; _i < nOfColNext; _i++) {
+            // Create board for next canvas
+            boardNext[_i] = [];
+            for (var _j = 0; _j < nOfRowsNext; _j++) {
+                boardNext[_i][_j] = false;
+            }
+        }
+        countTime();
+        arrOfShapes[0] = newShape();
+        arrOfShapes[1] = newShape();
+        currentShape = arrOfShapes[0];
+        nextShape = arrOfShapes[1];
+        drawBoard();
+        drawBoardOnNext();
+        startGame();
+    };
 
-	playBtn.addEventListener('click', function (e) {
-		// Btn play - starts the game
-		playTheGame();
-	});
-	playBtn.addEventListener('mouseup', function (e) {
-		this.blur();
-	});
+    playBtn.addEventListener('click', function (e) {
+        // Btn play - starts the game
+        playTheGame();
+    });
+    playBtn.addEventListener('mouseup', function (e) {
+        this.blur();
+    });
 
-	// tetrisMusic.play();
+    // tetrisMusic.play();
 
-	soundBtn.addEventListener('click', function (e) {
-		var icon = this.firstElementChild.classList;
-		if (musicOn) {
-			tetrisMusic.pause();
-			musicOn = false;
-			icon.remove("fa-volume-up");
-			icon.add("fa-volume-off");
-		} else if (gameOn) {
-			tetrisMusic.pause();
-			musicOn = true;
-			icon.remove("fa-volume-off");
-			icon.add("fa-volume-up");
-		} else {
-			tetrisMusic.play();
-			musicOn = true;
-			icon.remove("fa-volume-off");
-			icon.add("fa-volume-up");
-		}
-	});
-	soundBtn.addEventListener('mouseup', function (e) {
-		this.blur();
-	});
+    soundBtn.addEventListener('click', function (e) {
+        var icon = this.firstElementChild.classList;
+        if (musicOn) {
+            tetrisMusic.pause();
+            musicOn = false;
+            icon.remove("fa-volume-up");
+            icon.add("fa-volume-off");
+        } else if (gameOn) {
+            tetrisMusic.pause();
+            musicOn = true;
+            icon.remove("fa-volume-off");
+            icon.add("fa-volume-up");
+        } else {
+            tetrisMusic.play();
+            musicOn = true;
+            icon.remove("fa-volume-off");
+            icon.add("fa-volume-up");
+        }
+    });
+    soundBtn.addEventListener('mouseup', function (e) {
+        this.blur();
+    });
 
-	pauseBtn.addEventListener('click', function (e) {
-		var min = document.querySelector('#minutes');
-		var sec = document.querySelector('#seconds');
-		var a = parseInt(min.textContent);
-		var b = parseInt(sec.textContent);
-		if (pause) {
-			pause = false;
-			countTime(a, b);
-			startGame();
-		} else {
-			cancelAnimationFrame(animationFrameId);
-			clearInterval(timerId);
-			pause = true;
-		}
-	});
-	pauseBtn.addEventListener('mouseup', function (e) {
-		this.blur();
-	});
+    pauseBtn.addEventListener('click', function (e) {
+        var min = document.querySelector('#minutes');
+        var sec = document.querySelector('#seconds');
+        var a = parseInt(min.textContent);
+        var b = parseInt(sec.textContent);
+        if (pause) {
+            pause = false;
+            countTime(a, b);
+            startGame();
+        } else {
+            cancelAnimationFrame(animationFrameId);
+            clearInterval(timerId);
+            pause = true;
+        }
+    });
+    pauseBtn.addEventListener('mouseup', function (e) {
+        this.blur();
+    });
 
-	document.body.addEventListener("keydown", function (e) {
-		e.preventDefault();
-		switch (e.keyCode) {
-			case 38:
-				// up
-				if (musicOn) {
-					rotateLRMusic.play();
-				}
-				currentShape.rotate();
-				break;
-			case 40:
-				// down
-				if (musicOn) {
-					moveLRMusic.play();
-				}
-				currentShape.moveDown();
-				break;
-			case 37:
-				// left
-				if (musicOn) {
-					moveLRMusic.play();
-				}
-				currentShape.moveLeft();
-				break;
-			case 39:
-				// right
-				if (musicOn) {
-					moveLRMusic.play();
-				}
-				currentShape.moveRight();
-				break;
-			case 32:
-				playTheGame();
-			default:
-		};
-	});
+    document.body.addEventListener("keydown", function (e) {
+        e.preventDefault();
+        switch (e.keyCode) {
+            case 38:
+                // up
+                if (musicOn) {
+                    rotateLRMusic.play();
+                }
+                currentShape.rotate();
+                break;
+            case 40:
+                // down
+                if (musicOn) {
+                    moveLRMusic.play();
+                }
+                currentShape.moveDown();
+                break;
+            case 37:
+                // left
+                if (musicOn) {
+                    moveLRMusic.play();
+                }
+                currentShape.moveLeft();
+                break;
+            case 39:
+                // right
+                if (musicOn) {
+                    moveLRMusic.play();
+                }
+                currentShape.moveRight();
+                break;
+            case 32:
+                // space
+                playTheGame();
+            default:
+        };
+    });
 
-	leftBtn.addEventListener("click", function (e) {
-		currentShape.moveLeft();
-	});
-	leftBtn.addEventListener('mouseup', function (e) {
-		this.blur();
-	});
-	rightBtn.addEventListener("click", function (e) {
-		currentShape.moveRight();
-	});
-	rightBtn.addEventListener('mouseup', function (e) {
-		this.blur();
-	});
-	downBtn.addEventListener("click", function (e) {
-		currentShape.moveDown();
-	});
-	downBtn.addEventListener('mouseup', function (e) {
-		this.blur();
-	});
-	rotateBtn.addEventListener("click", function (e) {
-		currentShape.rotate();
-	});
-	rotateBtn.addEventListener('mouseup', function (e) {
-		this.blur();
-	});
+    leftBtn.addEventListener("click", function (e) {
+        currentShape.moveLeft();
+    });
+    leftBtn.addEventListener('mouseup', function (e) {
+        this.blur();
+    });
+    rightBtn.addEventListener("click", function (e) {
+        currentShape.moveRight();
+    });
+    rightBtn.addEventListener('mouseup', function (e) {
+        this.blur();
+    });
+    downBtn.addEventListener("click", function (e) {
+        currentShape.moveDown();
+    });
+    downBtn.addEventListener('mouseup', function (e) {
+        this.blur();
+    });
+    rotateBtn.addEventListener("click", function (e) {
+        currentShape.rotate();
+    });
+    rotateBtn.addEventListener('mouseup', function (e) {
+        this.blur();
+    });
 
-	var newShape = function newShape() {
-		// Get random shape
-		var randonShape = shapes[parseInt(Math.random() * shapes.length, 10)];
-		return new Shape(randonShape[0], randonShape[1]);
-	};
+    var newShape = function newShape() {
+        // Get random shape
+        var randonShape = shapes[parseInt(Math.random() * shapes.length, 10)];
+        return new Shape(randonShape[0], randonShape[1]);
+    };
 
-	var startGame = function startGame() {
-		// game loop
-		var now = Date.now();
-		var timer = now - setStart;
-		if (timer > gameSpeed) {
-			currentShape.moveDown();
-			nextShape.drawOnBoardNext();
-			setStart = now;
-		}
-		if (!done) {
-			animationFrameId = requestAnimationFrame(startGame);
-		}
-	};
+    var startGame = function startGame() {
+        // game loop
+        var now = Date.now();
+        var timer = now - setStart;
+        if (timer > gameSpeed) {
+            currentShape.moveDown();
+            nextShape.drawOnBoardNext();
+            setStart = now;
+        }
+        if (!done) {
+            animationFrameId = requestAnimationFrame(startGame);
+        }
+    };
 
-	var drawPoint = function drawPoint(x, y) {
-		// Drow single square on game-board
-		ctx.fillRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
-		var style = ctx.strokeStyle;
-		var fillstyle = ctx.fillStyle;
-		ctx.strokeStyle = "#5d5c5c";
-		ctx.strokeRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
-		ctx.fillStyle = "rgba(105, 111, 102, 0.3)";
-		ctx.fillRect(x * sizeOfTile + 2 * sizeOfTile / 8, y * sizeOfTile + 2 * sizeOfTile / 8, sizeOfTile / 2, sizeOfTile / 2);
-		ctx.fillStyle = fillstyle;
-		ctx.strokeStyle = style;
-	};
+    var gameOver = function gameOver() {
+        // alert("Game Over!"); // Game over!
+        done = true;
+        clearInterval(timerId);
+        var players = app.database().ref('players');
 
-	var drawPointOnNext = function drawPointOnNext(x, y) {
-		// Drow single square on next block board
-		ctxNext.fillRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
-		var style = ctxNext.strokeStyle;
-		ctxNext.strokeStyle = "#5d5c5c";
-		ctxNext.strokeRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
-		ctxNext.strokeStyle = style;
-	};
+        var sortable = [];
+        players.once("value", function (data) {
+            var dane = data.val();
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
 
-	var drawBoard = function drawBoard() {
-		// drow board on first canvas
-		var backCol = ctx.fillStyle;
-		for (var i = 0; i < numberOfColumns; i++) {
-			for (var j = 0; j < numberOfRows; j++) {
-				ctx.fillStyle = board[i][j] || clear;
-				drawPoint(j, i, sizeOfTile, sizeOfTile);
-			}
-		}
-		ctx.fillStyle = backCol;
-	};
+            try {
+                for (var _iterator = Object.keys(dane)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var key = _step.value;
 
-	var drawBoardOnNext = function drawBoardOnNext() {
-		// drow board on next canvas
-		var backCol = ctxNext.fillStyle;
-		for (var i = 0; i < nOfColNext; i++) {
-			for (var j = 0; j < nOfRowsNext; j++) {
-				ctxNext.fillStyle = boardNext[i][j] || clear;
-				drawPointOnNext(j, i, sizeOfTile, sizeOfTile);
-			}
-		}
-		ctxNext.fillStyle = backCol;
-	};
+                    sortable.push([dane[key].imie, dane[key].punkty]);
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+        }, function (error) {
+            console.log("Error: " + error.code);
+        });
 
-	var Shape = function () {
-		function Shape(shapesArr, color) {
-			_classCallCheck(this, Shape);
+        // sortable.sort(function(a, b) {
+        //     return b[1] - a[1];
+        // });
+        console.log(sortable);
+        console.log(sortable["0"]);
+        // let obiekt = {
+        //     imie: "Ola",
+        //     punkty: 380
+        // };
+    };
 
-			// Class Shape
-			this.shapesArr = shapesArr;
-			this.firstShape = shapesArr[0];
-			this.currIndex = 0;
-			this.color = color;
-			this.x = numberOfRows / 2 - parseInt(Math.ceil(this.firstShape.length / 2), 10);
-			this.y = -2;
-			this.xNext = nOfColNext / 2 - parseInt(Math.ceil(this.firstShape.length / 2), 10);
-			this.yNext = nOfColNext / 2 - parseInt(Math.ceil(this.firstShape.length / 2), 10);
-		}
+    var drawPoint = function drawPoint(x, y) {
+        // Drow single square on game-board
+        ctx.fillRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
+        var style = ctx.strokeStyle;
+        var fillstyle = ctx.fillStyle;
+        ctx.strokeStyle = "#5d5c5c";
+        ctx.strokeRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
+        ctx.fillStyle = "rgba(105, 111, 102, 0.3)";
+        ctx.fillRect(x * sizeOfTile + 2 * sizeOfTile / 8, y * sizeOfTile + 2 * sizeOfTile / 8, sizeOfTile / 2, sizeOfTile / 2);
+        ctx.fillStyle = fillstyle;
+        ctx.strokeStyle = style;
+    };
 
-		_createClass(Shape, [{
-			key: 'rotate',
-			value: function rotate() {
-				var sticky = 0;
-				var nextPattern = this.shapesArr[(this.currIndex + 1) % this.shapesArr.length];
+    var drawPointOnNext = function drawPointOnNext(x, y) {
+        // Drow single square on next block board
+        ctxNext.fillRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
+        var style = ctxNext.strokeStyle;
+        ctxNext.strokeStyle = "#5d5c5c";
+        ctxNext.strokeRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
+        ctxNext.strokeStyle = style;
+    };
 
-				if (this.detectColision(0, 0, nextPattern)) {
-					if (this.x > numberOfRows / 2) {
-						sticky = -1;
-					} else {
-						sticky = 1;
-					}
-				}
+    var drawBoard = function drawBoard() {
+        // drow board on first canvas
+        var backCol = ctx.fillStyle;
+        for (var i = 0; i < numberOfColumns; i++) {
+            for (var j = 0; j < numberOfRows; j++) {
+                ctx.fillStyle = board[i][j] || clear;
+                drawPoint(j, i, sizeOfTile, sizeOfTile);
+            }
+        }
+        ctx.fillStyle = backCol;
+    };
 
-				if (!this.detectColision(sticky, 0, nextPattern)) {
-					this.clearPoint();
-					this.x += sticky;
-					this.currIndex = (this.currIndex + 1) % this.shapesArr.length;
-					this.firstShape = this.shapesArr[this.currIndex];
-					this.drawOnBoard();
-				}
-			}
-		}, {
-			key: 'detectColision',
-			value: function detectColision(xMove, yMove, sh) {
-				// Check for colision with walls and blocks
-				for (var i = 0; i < sh.length; i++) {
-					for (var j = 0; j < sh.length; j++) {
-						if (sh[i][j]) {
-							var x = this.x + i + xMove;
-							var y = this.y + j + yMove;
-							if (y >= numberOfColumns || x < 0 || x >= numberOfRows) {
-								return hitWall;
-							}
-							if (y < 0) {
-								continue;
-							}
-							if (board[y][x] !== false) {
-								if (musicOn) {
-									touchDownMusic.play();
-								}
-								return hitBlock;
-							}
-						}
-						continue;
-					}
-				}
-				return 0;
-			}
-		}, {
-			key: 'moveDown',
-			value: function moveDown() {
-				if (this.detectColision(0, 1, this.firstShape)) {
-					if (musicOn) {
-						touchDownMusic.play();
-					}
-					this.stopMove();
-					arrOfShapes[0] = arrOfShapes[1];
-					arrOfShapes[1] = newShape();
-					currentShape = arrOfShapes[0];
-					drawBoardOnNext();
-					nextShape = arrOfShapes[1];
-				} else {
-					this.clearPoint();
-					this.y += 1;
-					this.drawOnBoard();
-				}
-			}
-		}, {
-			key: 'moveRight',
-			value: function moveRight() {
-				if (!this.detectColision(1, 0, this.firstShape)) {
-					this.clearPoint();
-					this.x += 1;
-					this.drawOnBoard();
-				}
-			}
-		}, {
-			key: 'moveLeft',
-			value: function moveLeft() {
-				if (!this.detectColision(-1, 0, this.firstShape)) {
-					this.clearPoint();
-					this.x -= 1;
-					this.drawOnBoard();
-				}
-			}
-		}, {
-			key: 'stopMove',
-			value: function stopMove() {
-				// Stops shape moving
-				for (var i = 0; i < this.firstShape.length; i++) {
-					for (var j = 0; j < this.firstShape.length; j++) {
-						if (this.y + j < 0) {
-							alert("Game Over!"); // Game over!
-							done = true;
-							clearInterval(timerId);
-							return;
-						}
-						if (!this.firstShape[i][j]) {
-							continue;
-						}
-						board[this.y + j][this.x + i] = this.color;
-					}
-				}
-				var fullRow = 0; // Remove full row and add points
-				for (var _i2 = 0; _i2 < numberOfColumns; _i2++) {
-					var _singleRow = true;
-					for (var _j2 = 0; _j2 < numberOfRows; _j2++) {
-						_singleRow = _singleRow && board[_i2][_j2] !== false;
-					}
-					if (_singleRow) {
-						for (var i2 = _i2; i2 > 1; i2--) {
-							for (var _j3 = 0; _j3 < numberOfRows; _j3++) {
-								board[i2][_j3] = board[i2 - 1][_j3];
-							}
-						}
-						for (var _i3 = 0; _i3 < numberOfRows; _i3++) {
-							board[0][_i3] = false;
-						}
-						fullRow++;
-					}
-				}
+    var drawBoardOnNext = function drawBoardOnNext() {
+        // drow board on next canvas
+        var backCol = ctxNext.fillStyle;
+        for (var i = 0; i < nOfColNext; i++) {
+            for (var j = 0; j < nOfRowsNext; j++) {
+                ctxNext.fillStyle = boardNext[i][j] || clear;
+                drawPointOnNext(j, i, sizeOfTile, sizeOfTile);
+            }
+        }
+        ctxNext.fillStyle = backCol;
+    };
 
-				if (fullRow > 0) {
-					singleRow += fullRow * 10;
-					if (singleRow % 50 === 0) {
-						if (gameSpeed === 150) {
-							gameSpeed = 150;
-							level;
-						} else {
-							gameSpeed -= 50;
-							level += 1;
-						}
-					} else {
-						level;
-					}
-					if (musicOn) {
-						lineClearMusic.play();
-					}
-					drawBoard();
-					score.textContent = singleRow;
-				}
-				gameLevel.textContent = level;
-			}
-		}, {
-			key: 'clearPoint',
-			value: function clearPoint() {
-				// Clear color
-				var backCol = ctx.fillStyle;
-				ctx.fillStyle = clear;
-				var x = this.x;
-				var y = this.y;
-				var numberOfBlocks = this.firstShape.length;
-				for (var ix = 0; ix < numberOfBlocks; ix++) {
-					for (var iy = 0; iy < numberOfBlocks; iy++) {
-						if (this.firstShape[ix][iy]) {
-							drawPoint(x + ix, y + iy);
-						}
-					}
-				}
-				ctx.fillStyle = backCol;
-			}
-		}, {
-			key: 'drawOnBoard',
-			value: function drawOnBoard() {
-				var backCol = ctx.fillStyle;
-				ctx.fillStyle = this.color;
-				var x = this.x;
-				var y = this.y;
-				var numberOfBlocks = this.firstShape.length;
-				for (var ix = 0; ix < numberOfBlocks; ix++) {
-					for (var iy = 0; iy < numberOfBlocks; iy++) {
-						if (this.firstShape[ix][iy]) {
-							drawPoint(x + ix, y + iy);
-						}
-					}
-				}
-				ctx.fillStyle = backCol;
-			}
-		}, {
-			key: 'drawOnBoardNext',
-			value: function drawOnBoardNext() {
-				var x = this.xNext;
-				var y = this.yNext;
-				var numberOfBlocks = this.firstShape.length;
-				for (var ix = 0; ix < numberOfBlocks; ix++) {
-					for (var iy = 0; iy < numberOfBlocks; iy++) {
-						if (this.firstShape[ix][iy]) {
-							ctxNext.fillStyle = this.color;
-							drawPointOnNext(x + ix, y + iy);
-						}
-					}
-				}
-			}
-		}]);
+    var Shape = function () {
+        function Shape(shapesArr, color) {
+            _classCallCheck(this, Shape);
 
-		return Shape;
-	}();
+            // Class Shape
+            this.shapesArr = shapesArr;
+            this.firstShape = shapesArr[0];
+            this.currIndex = 0;
+            this.color = color;
+            this.x = numberOfRows / 2 - parseInt(Math.ceil(this.firstShape.length / 2), 10);
+            this.y = -2;
+            this.xNext = nOfColNext / 2 - parseInt(Math.ceil(this.firstShape.length / 2), 10);
+            this.yNext = nOfColNext / 2 - parseInt(Math.ceil(this.firstShape.length / 2), 10);
+        }
 
-	;
+        _createClass(Shape, [{
+            key: 'rotate',
+            value: function rotate() {
+                var sticky = 0;
+                var nextPattern = this.shapesArr[(this.currIndex + 1) % this.shapesArr.length];
+
+                if (this.detectColision(0, 0, nextPattern)) {
+                    if (this.x > numberOfRows / 2) {
+                        sticky = -1;
+                    } else {
+                        sticky = 1;
+                    }
+                }
+
+                if (!this.detectColision(sticky, 0, nextPattern)) {
+                    this.clearPoint();
+                    this.x += sticky;
+                    this.currIndex = (this.currIndex + 1) % this.shapesArr.length;
+                    this.firstShape = this.shapesArr[this.currIndex];
+                    this.drawOnBoard();
+                }
+            }
+        }, {
+            key: 'detectColision',
+            value: function detectColision(xMove, yMove, sh) {
+                // Check for colision with walls and blocks
+                for (var i = 0; i < sh.length; i++) {
+                    for (var j = 0; j < sh.length; j++) {
+                        if (sh[i][j]) {
+                            var x = this.x + i + xMove;
+                            var y = this.y + j + yMove;
+                            if (y >= numberOfColumns || x < 0 || x >= numberOfRows) {
+                                return hitWall;
+                            }
+                            if (y < 0) {
+                                continue;
+                            }
+                            if (board[y][x] !== false) {
+                                if (musicOn) {
+                                    touchDownMusic.play();
+                                }
+                                return hitBlock;
+                            }
+                        }
+                        continue;
+                    }
+                }
+                return 0;
+            }
+        }, {
+            key: 'moveDown',
+            value: function moveDown() {
+                if (this.detectColision(0, 1, this.firstShape)) {
+                    if (musicOn) {
+                        touchDownMusic.play();
+                    }
+                    this.stopMove();
+                    arrOfShapes[0] = arrOfShapes[1];
+                    arrOfShapes[1] = newShape();
+                    currentShape = arrOfShapes[0];
+                    drawBoardOnNext();
+                    nextShape = arrOfShapes[1];
+                } else {
+                    this.clearPoint();
+                    this.y += 1;
+                    this.drawOnBoard();
+                }
+            }
+        }, {
+            key: 'moveRight',
+            value: function moveRight() {
+                if (!this.detectColision(1, 0, this.firstShape)) {
+                    this.clearPoint();
+                    this.x += 1;
+                    this.drawOnBoard();
+                }
+            }
+        }, {
+            key: 'moveLeft',
+            value: function moveLeft() {
+                if (!this.detectColision(-1, 0, this.firstShape)) {
+                    this.clearPoint();
+                    this.x -= 1;
+                    this.drawOnBoard();
+                }
+            }
+        }, {
+            key: 'stopMove',
+            value: function stopMove() {
+                // Stops shape moving
+                if (!done) {
+                    for (var i = 0; i < this.firstShape.length; i++) {
+                        for (var j = 0; j < this.firstShape.length; j++) {
+                            if (this.y + j < 0) {
+                                gameOver();
+                                return;
+                            }
+                            if (!this.firstShape[i][j]) {
+                                continue;
+                            }
+                            board[this.y + j][this.x + i] = this.color;
+                        }
+                    }
+                    var fullRow = 0; // Remove full row and add points
+                    for (var _i2 = 0; _i2 < numberOfColumns; _i2++) {
+                        var _singleRow = true;
+                        for (var _j2 = 0; _j2 < numberOfRows; _j2++) {
+                            _singleRow = _singleRow && board[_i2][_j2] !== false;
+                        }
+                        if (_singleRow) {
+                            for (var i2 = _i2; i2 > 1; i2--) {
+                                for (var _j3 = 0; _j3 < numberOfRows; _j3++) {
+                                    board[i2][_j3] = board[i2 - 1][_j3];
+                                }
+                            }
+                            for (var _i3 = 0; _i3 < numberOfRows; _i3++) {
+                                board[0][_i3] = false;
+                            }
+                            fullRow++;
+                        }
+                    }
+
+                    if (fullRow > 0) {
+                        singleRow += fullRow * 10;
+                        if (singleRow % 50 === 0) {
+                            if (gameSpeed === 150) {
+                                gameSpeed = 150;
+                                level;
+                            } else {
+                                gameSpeed -= 50;
+                                level += 1;
+                            }
+                        } else {
+                            level;
+                        }
+                        if (musicOn) {
+                            lineClearMusic.play();
+                        }
+                        drawBoard();
+                        score.textContent = singleRow;
+                    }
+                    gameLevel.textContent = level;
+                }
+            }
+        }, {
+            key: 'clearPoint',
+            value: function clearPoint() {
+                // Clear color
+                var backCol = ctx.fillStyle;
+                ctx.fillStyle = clear;
+                var x = this.x;
+                var y = this.y;
+                var numberOfBlocks = this.firstShape.length;
+                for (var ix = 0; ix < numberOfBlocks; ix++) {
+                    for (var iy = 0; iy < numberOfBlocks; iy++) {
+                        if (this.firstShape[ix][iy]) {
+                            drawPoint(x + ix, y + iy);
+                        }
+                    }
+                }
+                ctx.fillStyle = backCol;
+            }
+        }, {
+            key: 'drawOnBoard',
+            value: function drawOnBoard() {
+                var backCol = ctx.fillStyle;
+                ctx.fillStyle = this.color;
+                var x = this.x;
+                var y = this.y;
+                var numberOfBlocks = this.firstShape.length;
+                for (var ix = 0; ix < numberOfBlocks; ix++) {
+                    for (var iy = 0; iy < numberOfBlocks; iy++) {
+                        if (this.firstShape[ix][iy]) {
+                            drawPoint(x + ix, y + iy);
+                        }
+                    }
+                }
+                ctx.fillStyle = backCol;
+            }
+        }, {
+            key: 'drawOnBoardNext',
+            value: function drawOnBoardNext() {
+                var x = this.xNext;
+                var y = this.yNext;
+                var numberOfBlocks = this.firstShape.length;
+                for (var ix = 0; ix < numberOfBlocks; ix++) {
+                    for (var iy = 0; iy < numberOfBlocks; iy++) {
+                        if (this.firstShape[ix][iy]) {
+                            ctxNext.fillStyle = this.color;
+                            drawPointOnNext(x + ix, y + iy);
+                        }
+                    }
+                }
+            }
+        }]);
+
+        return Shape;
+    }();
+
+    ;
 });
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-var I = exports.I = [[[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]], [[0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]]];
-
-var J = exports.J = [[[1, 0, 0], [1, 1, 1], [0, 0, 0]], [[0, 1, 1], [0, 1, 0], [0, 1, 0]], [[0, 0, 0], [1, 1, 1], [0, 0, 1]], [[0, 1, 0], [0, 1, 0], [1, 1, 0]]];
-
-var L = exports.L = [[[0, 0, 1], [1, 1, 1], [0, 0, 0]], [[0, 1, 0], [0, 1, 0], [0, 1, 1]], [[0, 0, 0], [1, 1, 1], [1, 0, 0]], [[1, 1, 0], [0, 1, 0], [0, 1, 0]]];
-
-var O = exports.O = [[[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]];
-
-var S = exports.S = [[[0, 1, 1], [1, 1, 0], [0, 0, 0]], [[0, 1, 0], [0, 1, 1], [0, 0, 1]], [[0, 0, 0], [0, 1, 1], [1, 1, 0]], [[1, 0, 0], [1, 1, 0], [0, 1, 0]]];
-
-var T = exports.T = [[[0, 1, 0], [1, 1, 1], [0, 0, 0]], [[0, 1, 0], [0, 1, 1], [0, 1, 0]], [[0, 0, 0], [1, 1, 1], [0, 1, 0]], [[0, 1, 0], [1, 1, 0], [0, 1, 0]]];
-
-var Z = exports.Z = [[[1, 1, 0], [0, 1, 1], [0, 0, 0]], [[0, 0, 1], [0, 1, 1], [0, 1, 0]], [[0, 0, 0], [1, 1, 0], [0, 1, 1]], [[0, 1, 0], [1, 1, 0], [1, 0, 0]]];
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(4);
+var content = __webpack_require__(3);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -667,7 +698,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(6)(content, options);
+var update = __webpack_require__(5)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -684,10 +715,10 @@ if(false) {
 }
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(undefined);
+exports = module.exports = __webpack_require__(4)(undefined);
 // imports
 
 
@@ -698,7 +729,7 @@ exports.push([module.i, ".container .row::before, .container .row::after, .tetri
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 /*
@@ -780,7 +811,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -826,7 +857,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(7);
+var	fixUrls = __webpack_require__(6);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -1139,7 +1170,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports) {
 
 
@@ -1232,6 +1263,30 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var I = exports.I = [[[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]], [[0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]]];
+
+var J = exports.J = [[[1, 0, 0], [1, 1, 1], [0, 0, 0]], [[0, 1, 1], [0, 1, 0], [0, 1, 0]], [[0, 0, 0], [1, 1, 1], [0, 0, 1]], [[0, 1, 0], [0, 1, 0], [1, 1, 0]]];
+
+var L = exports.L = [[[0, 0, 1], [1, 1, 1], [0, 0, 0]], [[0, 1, 0], [0, 1, 0], [0, 1, 1]], [[0, 0, 0], [1, 1, 1], [1, 0, 0]], [[1, 1, 0], [0, 1, 0], [0, 1, 0]]];
+
+var O = exports.O = [[[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]];
+
+var S = exports.S = [[[0, 1, 1], [1, 1, 0], [0, 0, 0]], [[0, 1, 0], [0, 1, 1], [0, 0, 1]], [[0, 0, 0], [0, 1, 1], [1, 1, 0]], [[1, 0, 0], [1, 1, 0], [0, 1, 0]]];
+
+var T = exports.T = [[[0, 1, 0], [1, 1, 1], [0, 0, 0]], [[0, 1, 0], [0, 1, 1], [0, 1, 0]], [[0, 0, 0], [1, 1, 1], [0, 1, 0]], [[0, 1, 0], [1, 1, 0], [0, 1, 0]]];
+
+var Z = exports.Z = [[[1, 1, 0], [0, 1, 1], [0, 0, 0]], [[0, 0, 1], [0, 1, 1], [0, 1, 0]], [[0, 0, 0], [1, 1, 0], [0, 1, 1]], [[0, 1, 0], [1, 1, 0], [1, 0, 0]]];
 
 /***/ })
 /******/ ]);

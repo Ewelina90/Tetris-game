@@ -6,6 +6,12 @@ import { O } from './shapes.js';
 import { I } from './shapes.js';
 import { T } from './shapes.js';
 
+const config = {
+    apiKey: "AIzaSyC7T5R2opJNWtT6-fQ-KXcI8PRxGLwfnt0",
+    databaseURL: "https://tetris-555a0.firebaseio.com",
+};
+const app = firebase.initializeApp(config);
+
 document.addEventListener("DOMContentLoaded",function(){
     const canvas = document.getElementById('canvas-main');
 	const ctx = canvas.getContext("2d");
@@ -89,7 +95,7 @@ document.addEventListener("DOMContentLoaded",function(){
 				  min.innerText = ('0' + minutes);
 				  }
 				  else if( minutes > 59 ){
-					  const timeout = alert('Game over!');
+					//   gameOver();
 				  }else{ min.innerText = minutes; }
 			}else{ sec.innerText = seconds; }
 		}, 1000);
@@ -98,14 +104,14 @@ document.addEventListener("DOMContentLoaded",function(){
     const playTheGame = () => {
         startPage.style.display = "none";
         if(gameOn === false){
-            const setName = prompt('Type your name: ');
-    		if(setName === null){
-    			return;
-    		}else{
-                playerName.innerText = setName;
+            // const setName = prompt('Type your name: ');
+    		// if(setName === null){
+    		// 	return;
+    		// }else{
+            //     playerName.innerText = setName;
                 gameOn = true;
                 tetrisMusic.pause();
-            }
+            // }
         }else {
             const newGame = confirm('Are you sure you want to start a new game?');
             if(newGame === true){
@@ -226,7 +232,7 @@ document.addEventListener("DOMContentLoaded",function(){
                 }
                 currentShape.moveRight();
                 break;
-            case 32:
+            case 32:                    // space
                 playTheGame();
 			default:
 		};
@@ -276,6 +282,33 @@ document.addEventListener("DOMContentLoaded",function(){
 			animationFrameId = requestAnimationFrame(startGame);
 		}
 	};
+
+    const gameOver = () => {
+        // alert("Game Over!"); // Game over!
+        done = true;
+        clearInterval(timerId);
+        const players = app.database().ref('players');
+
+        const sortable = [];
+        players.once("value", function(data) {
+            let dane = data.val();
+            for (const key of Object.keys(dane)) {
+                sortable.push([dane[key].imie, dane[key].punkty]);
+            }
+        }, function (error) {
+            console.log("Error: " + error.code);
+        });
+
+        // sortable.sort(function(a, b) {
+        //     return b[1] - a[1];
+        // });
+        console.log(sortable);
+        console.log(sortable["0"]);
+        // let obiekt = {
+        //     imie: "Ola",
+        //     punkty: 380
+        // };
+    }
 
     const drawPoint = (x, y) => {					// Drow single square on game-board
 		ctx.fillRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
@@ -412,59 +445,59 @@ document.addEventListener("DOMContentLoaded",function(){
 		};
 
 		stopMove(){                   // Stops shape moving
-			for (let i = 0; i < this.firstShape.length; i++) {
-				for (let j = 0; j < this.firstShape.length; j++) {
-					if (this.y + j < 0) {
-						alert("Game Over!"); // Game over!
-						done = true;
-						clearInterval(timerId);
-						return;
-					}
-					if (!this.firstShape[i][j]) {
-						continue;
-					}
-					board[this.y + j][this.x + i] = this.color;
-				}
-			}
-			let fullRow = 0; // Remove full row and add points
-			for (let i = 0; i < numberOfColumns; i++) {
-				let singleRow = true;
-				for (let j = 0; j < numberOfRows; j++) {
-					singleRow = singleRow && board[i][j] !== false;
-				}
-				if (singleRow) {
-					for (let i2 = i; i2 > 1; i2--) {
-						for (let j = 0; j < numberOfRows; j++) {
-							board[i2][j] = board[i2-1][j];
-						}
-					}
-					for (let i = 0; i < numberOfRows; i++) {
-						board[0][i] = false;
-					}
-					fullRow++;
-				}
-			}
+            if(!done){
+    			for (let i = 0; i < this.firstShape.length; i++) {
+    				for (let j = 0; j < this.firstShape.length; j++) {
+    					if (this.y + j < 0) {
+    		                gameOver();
+    						return;
+    					}
+    					if (!this.firstShape[i][j]) {
+    						continue;
+    					}
+    					board[this.y + j][this.x + i] = this.color;
+    				}
+    			}
+    			let fullRow = 0; // Remove full row and add points
+    			for (let i = 0; i < numberOfColumns; i++) {
+    				let singleRow = true;
+    				for (let j = 0; j < numberOfRows; j++) {
+    					singleRow = singleRow && board[i][j] !== false;
+    				}
+    				if (singleRow) {
+    					for (let i2 = i; i2 > 1; i2--) {
+    						for (let j = 0; j < numberOfRows; j++) {
+    							board[i2][j] = board[i2-1][j];
+    						}
+    					}
+    					for (let i = 0; i < numberOfRows; i++) {
+    						board[0][i] = false;
+    					}
+    					fullRow++;
+    				}
+    			}
 
-			if (fullRow > 0) {
-				singleRow += fullRow * 10;
-                if(singleRow%50 === 0){
-                    if(gameSpeed === 150){
-                        gameSpeed = 150;
-                        level;
+    			if (fullRow > 0) {
+    				singleRow += fullRow * 10;
+                    if(singleRow%50 === 0){
+                        if(gameSpeed === 150){
+                            gameSpeed = 150;
+                            level;
+                        }else{
+                            gameSpeed -= 50;
+                            level += 1;
+                        }
                     }else{
-                        gameSpeed -= 50;
-                        level += 1;
+                        level;
                     }
-                }else{
-                    level;
-                }
-                if(musicOn){
-                    lineClearMusic.play();
-                }
-				drawBoard();
-				score.textContent = singleRow;
-			}
-            gameLevel.textContent = level;
+                    if(musicOn){
+                        lineClearMusic.play();
+                    }
+    				drawBoard();
+    				score.textContent = singleRow;
+    			}
+                gameLevel.textContent = level;
+            }
 		};
 
 		clearPoint(){		// Clear color
