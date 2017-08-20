@@ -68,7 +68,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
-module.exports = __webpack_require__(2);
+module.exports = __webpack_require__(3);
 
 
 /***/ }),
@@ -80,7 +80,7 @@ module.exports = __webpack_require__(2);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _shapes = __webpack_require__(7);
+var _shapes = __webpack_require__(2);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -112,7 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Information displays on gamepad screen
     var startPage = document.querySelector('.start-game-info');
     var playBtn = document.querySelector('.play-btn');
-    var playerName = document.querySelector('#player-name span');
     // const gameTime = document.querySelector('#game-time span');
     var score = document.getElementById('score');
     var gameLevel = document.getElementById('level');
@@ -376,6 +375,11 @@ document.addEventListener("DOMContentLoaded", function () {
         // alert("Game Over!"); // Game over!
         done = true;
         clearInterval(timerId);
+        var highScore = document.querySelector('#high-score');
+        highScore.textContent = singleRow;
+
+        var playerName = document.querySelector('#player-name');
+        console.log(playerName.textContent);
         var players = app.database().ref('players');
 
         var sortable = [];
@@ -408,7 +412,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }, function (error) {
             console.log("Error: " + error.code);
         });
-
+        var gameOverInfo = document.querySelector(".game-over");
+        gameOverInfo.style.display = 'block';
         // sortable.sort(function(a, b) {
         //     return b[1] - a[1];
         // });
@@ -687,10 +692,34 @@ document.addEventListener("DOMContentLoaded", function () {
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var I = exports.I = [[[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]], [[0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]]];
+
+var J = exports.J = [[[1, 0, 0], [1, 1, 1], [0, 0, 0]], [[0, 1, 1], [0, 1, 0], [0, 1, 0]], [[0, 0, 0], [1, 1, 1], [0, 0, 1]], [[0, 1, 0], [0, 1, 0], [1, 1, 0]]];
+
+var L = exports.L = [[[0, 0, 1], [1, 1, 1], [0, 0, 0]], [[0, 1, 0], [0, 1, 0], [0, 1, 1]], [[0, 0, 0], [1, 1, 1], [1, 0, 0]], [[1, 1, 0], [0, 1, 0], [0, 1, 0]]];
+
+var O = exports.O = [[[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]];
+
+var S = exports.S = [[[0, 1, 1], [1, 1, 0], [0, 0, 0]], [[0, 1, 0], [0, 1, 1], [0, 0, 1]], [[0, 0, 0], [0, 1, 1], [1, 1, 0]], [[1, 0, 0], [1, 1, 0], [0, 1, 0]]];
+
+var T = exports.T = [[[0, 1, 0], [1, 1, 1], [0, 0, 0]], [[0, 1, 0], [0, 1, 1], [0, 1, 0]], [[0, 0, 0], [1, 1, 1], [0, 1, 0]], [[0, 1, 0], [1, 1, 0], [0, 1, 0]]];
+
+var Z = exports.Z = [[[1, 1, 0], [0, 1, 1], [0, 0, 0]], [[0, 0, 1], [0, 1, 1], [0, 1, 0]], [[0, 0, 0], [1, 1, 0], [0, 1, 1]], [[0, 1, 0], [1, 1, 0], [1, 0, 0]]];
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(3);
+var content = __webpack_require__(4);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -698,7 +727,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(5)(content, options);
+var update = __webpack_require__(6)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -715,21 +744,21 @@ if(false) {
 }
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(undefined);
+exports = module.exports = __webpack_require__(5)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, ".container .row::before, .container .row::after, .tetris-game .game-board .game-pad .game-board-frame .game-board-main::after, .tetris-game .game-board .game-pad .game-board-frame .game-board-main::before {\n  display: block;\n  clear: both;\n  content: \"\";\n  height: 0;\n  visibility: hidden; }\n\n.tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content p button, .tetris-game .game-board .game-controls .buttons-contener .horizontal-buttons button, .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons button, .tetris-game .game-board .game-controls .buttons-contener .rotate-btn button {\n  background: #ecd21e;\n  width: 60px;\n  height: 60px;\n  border-radius: 50%;\n  border: 1px solid gray;\n  box-shadow: 0px 8px 1px -1px rgba(255, 255, 255, 0.2) inset, 0px 0px 2px 0px grey; }\n  .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content p button:focus, .tetris-game .game-board .game-controls .buttons-contener .horizontal-buttons button:focus, .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons button:focus, .tetris-game .game-board .game-controls .buttons-contener .rotate-btn button:focus {\n    outline: 0;\n    box-shadow: 0px 0px 4px 0px grey inset; }\n\n#l-1 {\n  color: #f00; }\n\n#l-2 {\n  color: #ffa500; }\n\n#l-3 {\n  color: #ff0; }\n\n#l-4 {\n  color: #0000ff; }\n\n#l-5 {\n  color: #0ff; }\n\n#l-6 {\n  color: #a0f; }\n\n* {\n  box-sizing: border-box;\n  font-family: 'Play','Arial', sans-serif; }\n\nbody {\n  margin: 0;\n  padding: 0; }\n\n.container {\n  width: 100vw;\n  height: 100vh; }\n  .container .row {\n    width: 100%; }\n    .container .row .col-1 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n    .container .row .col-2 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n    .container .row .col-3 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n\n.tetris-game .game-info .info {\n  display: inline-block;\n  padding: 0 2em;\n  font-size: 1.3em; }\n\n.tetris-game .game-board {\n  background-color: #eae7e7;\n  width: 437px;\n  margin: 0 auto; }\n  .tetris-game .game-board .game-pad {\n    margin: 0 auto;\n    width: 437px;\n    height: 100vh;\n    background-color: #bebcbd;\n    border-radius: 10px;\n    box-shadow: 0px 0px 10px 1px #d7d6d7 inset; }\n    .tetris-game .game-board .game-pad h1 {\n      text-align: center;\n      color: blue;\n      position: relative;\n      top: 12px;\n      background: #bebcbd;\n      margin: 0 auto;\n      width: 5em;\n      padding: 0 12px;\n      letter-spacing: 1px; }\n    .tetris-game .game-board .game-pad .game-board-frame {\n      border: 7px solid #ecd21e;\n      width: 328px;\n      height: 390px;\n      padding: 26px;\n      margin: 0 auto; }\n      .tetris-game .game-board .game-pad .game-board-frame .game-board-main {\n        border: 4px solid #d2cdcd;\n        border-style: inset;\n        background-color: #97b289;\n        position: relative; }\n        .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info {\n          position: absolute;\n          width: 254px;\n          height: 310px;\n          background-color: #97b289; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content {\n            margin: 0 auto;\n            margin-top: 25px;\n            width: 204px;\n            height: 260px;\n            text-align: center; }\n            .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content ul.tetris-letters {\n              list-style: none;\n              margin: 0;\n              padding: 0; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content ul.tetris-letters li {\n                display: inline-block;\n                font-size: 55px;\n                font-weight: 700; }\n            .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content p {\n              text-align: center;\n              padding: 3px; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content p button {\n                width: 25px;\n                height: 25px;\n                margin: 0 5px;\n                font-size: 10px; }\n            .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows {\n              position: relative; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows .key-arrow {\n                width: 30px;\n                height: 30px;\n                border: 2px solid #2c3528;\n                text-align: center;\n                position: absolute;\n                color: #2c3528; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-1 {\n                left: calc(50% - 15px); }\n                .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-1 i {\n                  padding-top: 20%; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-2 {\n                top: 40px;\n                left: calc(50% - 55px); }\n                .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-2 i {\n                  padding-top: 20%; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-3 {\n                left: calc(50% - 15px);\n                top: 40px; }\n                .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-3 i {\n                  padding-top: 20%; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-4 {\n                left: calc(50% + 25px);\n                top: 40px; }\n                .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-4 i {\n                  padding-top: 20%; }\n        .tetris-game .game-board .game-pad .game-board-frame .game-board-main .canvas {\n          float: left; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .canvas #canvas-main {\n            margin: 5px;\n            width: 150px;\n            height: 300px;\n            background-color: #97b289;\n            display: block;\n            border: 2px solid black; }\n        .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info {\n          float: left;\n          width: 94px;\n          text-align: center; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info p {\n            margin: 0;\n            padding: 0; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info .game-board-frame {\n            border: none;\n            width: 90px;\n            height: 90px;\n            padding: 10px;\n            margin: 0 auto; }\n            .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info .game-board-frame #canvas-next {\n              display: block;\n              border: 1px solid #000000;\n              width: 60px;\n              height: 60px;\n              margin: 0 auto;\n              background-color: #97b289; }\n  .tetris-game .game-board .game-controls .buttons-contener {\n    z-index: 4;\n    width: 320px;\n    height: 320px;\n    margin: 0 auto;\n    padding-top: 30px; }\n    .tetris-game .game-board .game-controls .buttons-contener .horizontal-buttons button {\n      width: 35px;\n      height: 35px;\n      margin-right: 20px;\n      font-size: 14px; }\n    .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons {\n      padding-top: 20px;\n      position: relative;\n      width: 60%; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons button {\n        position: absolute; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons .left-btn {\n        left: 0; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons .down-btn {\n        top: 70px;\n        left: 60px; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons .right-btn {\n        right: 10px; }\n    .tetris-game .game-board .game-controls .buttons-contener .rotate-btn {\n      width: 40%;\n      float: right;\n      text-align: right;\n      position: relative;\n      top: -20px; }\n      .tetris-game .game-board .game-controls .buttons-contener .rotate-btn button {\n        width: 110px;\n        height: 110px; }\n", ""]);
+exports.push([module.i, ".container .row::before, .container .row::after, .tetris-game .game-board .game-pad .game-board-frame .game-board-main::after, .tetris-game .game-board .game-pad .game-board-frame .game-board-main::before {\n  display: block;\n  clear: both;\n  content: \"\";\n  height: 0;\n  visibility: hidden; }\n\n.tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content p button, .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-over #player-name button, .tetris-game .game-board .game-controls .buttons-contener .horizontal-buttons button, .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons button, .tetris-game .game-board .game-controls .buttons-contener .rotate-btn button {\n  background: #ecd21e;\n  width: 60px;\n  height: 60px;\n  border-radius: 50%;\n  border: 1px solid gray;\n  box-shadow: 0px 8px 1px -1px rgba(255, 255, 255, 0.2) inset, 0px 0px 2px 0px grey; }\n  .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content p button:focus, .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-over #player-name button:focus, .tetris-game .game-board .game-controls .buttons-contener .horizontal-buttons button:focus, .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons button:focus, .tetris-game .game-board .game-controls .buttons-contener .rotate-btn button:focus {\n    outline: 0;\n    box-shadow: 0px 0px 4px 0px grey inset; }\n\n#l-1 {\n  color: #f00; }\n\n#l-2 {\n  color: #ffa500; }\n\n#l-3 {\n  color: #ff0; }\n\n#l-4 {\n  color: #0000ff; }\n\n#l-5 {\n  color: #0ff; }\n\n#l-6 {\n  color: #a0f; }\n\n* {\n  box-sizing: border-box;\n  font-family: 'Play','Arial', sans-serif; }\n\nbody {\n  margin: 0;\n  padding: 0; }\n\n.container {\n  width: 100vw;\n  height: 100vh; }\n  .container .row {\n    width: 100%; }\n    .container .row .col-1 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n    .container .row .col-2 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n    .container .row .col-3 {\n      float: left;\n      width: 100%;\n      min-height: 1px; }\n\n.tetris-game .game-info .info {\n  display: inline-block;\n  padding: 0 2em;\n  font-size: 1.3em; }\n\n.tetris-game .game-board {\n  background-color: #eae7e7;\n  width: 437px;\n  margin: 0 auto; }\n  .tetris-game .game-board .game-pad {\n    margin: 0 auto;\n    width: 437px;\n    height: 100vh;\n    background-color: #bebcbd;\n    border-radius: 10px;\n    box-shadow: 0px 0px 10px 1px #d7d6d7 inset; }\n    .tetris-game .game-board .game-pad h1 {\n      text-align: center;\n      color: blue;\n      position: relative;\n      top: 12px;\n      background: #bebcbd;\n      margin: 0 auto;\n      width: 5em;\n      padding: 0 12px;\n      letter-spacing: 1px; }\n    .tetris-game .game-board .game-pad .game-board-frame {\n      border: 7px solid #ecd21e;\n      width: 328px;\n      height: 390px;\n      padding: 26px;\n      margin: 0 auto; }\n      .tetris-game .game-board .game-pad .game-board-frame .game-board-main {\n        border: 4px solid #d2cdcd;\n        border-style: inset;\n        background-color: #97b289;\n        position: relative; }\n        .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info {\n          position: absolute;\n          width: 254px;\n          height: 310px;\n          background-color: #97b289; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content {\n            margin: 0 auto;\n            margin-top: 15px;\n            width: 204px;\n            height: 260px;\n            text-align: center; }\n            .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content ul.tetris-letters {\n              list-style: none;\n              margin: 0;\n              padding: 0; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content ul.tetris-letters li {\n                display: inline-block;\n                font-size: 55px;\n                font-weight: 700; }\n            .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content p {\n              text-align: center;\n              padding: 3px; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content p button {\n                width: 25px;\n                height: 25px;\n                margin: 0 5px;\n                font-size: 10px; }\n            .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows {\n              position: relative; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows .key-arrow {\n                width: 30px;\n                height: 30px;\n                border: 2px solid #2c3528;\n                text-align: center;\n                position: absolute;\n                color: #2c3528; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-1 {\n                left: calc(50% - 15px); }\n                .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-1 i {\n                  padding-top: 20%; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-2 {\n                top: 40px;\n                left: calc(50% - 55px); }\n                .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-2 i {\n                  padding-top: 20%; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-3 {\n                left: calc(50% - 15px);\n                top: 40px; }\n                .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-3 i {\n                  padding-top: 20%; }\n              .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-4 {\n                left: calc(50% + 25px);\n                top: 40px; }\n                .tetris-game .game-board .game-pad .game-board-frame .game-board-main .start-game-info .start-game-content .keyboard-arrows #arrow-4 i {\n                  padding-top: 20%; }\n        .tetris-game .game-board .game-pad .game-board-frame .game-board-main .canvas {\n          float: left; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .canvas #canvas-main {\n            margin: 5px;\n            width: 150px;\n            height: 300px;\n            background-color: #97b289;\n            display: block;\n            border: 2px solid black; }\n        .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info {\n          float: left;\n          width: 94px;\n          text-align: center; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info p {\n            margin: 0;\n            padding: 0; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info .game-board-frame {\n            border: none;\n            width: 90px;\n            height: 90px;\n            padding: 10px;\n            margin: 0 auto; }\n            .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-info .game-board-frame #canvas-next {\n              display: block;\n              border: 1px solid #000000;\n              width: 60px;\n              height: 60px;\n              margin: 0 auto;\n              background-color: #97b289; }\n        .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-over {\n          position: absolute;\n          text-align: center;\n          width: 254px;\n          height: 310px;\n          background-color: #97b289;\n          z-index: 1000;\n          display: none; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-over h2 {\n            letter-spacing: 2px; }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-over #r-letter {\n            display: inline-block;\n            position: relative;\n            top: 18px;\n            left: 5px;\n            transform: rotate(30deg); }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-over #e-letter {\n            display: inline-block;\n            position: relative;\n            top: 2px;\n            transform: rotate(10deg); }\n          .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-over #player-name {\n            text-decoration: underline; }\n            .tetris-game .game-board .game-pad .game-board-frame .game-board-main .game-over #player-name button {\n              width: 50px;\n              height: 30px;\n              border-radius: 10px; }\n  .tetris-game .game-board .game-controls .buttons-contener {\n    z-index: 4;\n    width: 320px;\n    height: 320px;\n    margin: 0 auto;\n    padding-top: 30px; }\n    .tetris-game .game-board .game-controls .buttons-contener .horizontal-buttons button {\n      width: 35px;\n      height: 35px;\n      margin-right: 20px;\n      font-size: 14px; }\n    .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons {\n      padding-top: 20px;\n      position: relative;\n      width: 60%; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons button {\n        position: absolute; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons .left-btn {\n        left: 0; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons .down-btn {\n        top: 70px;\n        left: 60px; }\n      .tetris-game .game-board .game-controls .buttons-contener .arrow-buttons .right-btn {\n        right: 10px; }\n    .tetris-game .game-board .game-controls .buttons-contener .rotate-btn {\n      width: 40%;\n      float: right;\n      text-align: right;\n      position: relative;\n      top: -20px; }\n      .tetris-game .game-board .game-controls .buttons-contener .rotate-btn button {\n        width: 110px;\n        height: 110px; }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 /*
@@ -811,7 +840,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -857,7 +886,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(6);
+var	fixUrls = __webpack_require__(7);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -1170,7 +1199,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 
@@ -1263,30 +1292,6 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-var I = exports.I = [[[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]], [[0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]]];
-
-var J = exports.J = [[[1, 0, 0], [1, 1, 1], [0, 0, 0]], [[0, 1, 1], [0, 1, 0], [0, 1, 0]], [[0, 0, 0], [1, 1, 1], [0, 0, 1]], [[0, 1, 0], [0, 1, 0], [1, 1, 0]]];
-
-var L = exports.L = [[[0, 0, 1], [1, 1, 1], [0, 0, 0]], [[0, 1, 0], [0, 1, 0], [0, 1, 1]], [[0, 0, 0], [1, 1, 1], [1, 0, 0]], [[1, 1, 0], [0, 1, 0], [0, 1, 0]]];
-
-var O = exports.O = [[[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]];
-
-var S = exports.S = [[[0, 1, 1], [1, 1, 0], [0, 0, 0]], [[0, 1, 0], [0, 1, 1], [0, 0, 1]], [[0, 0, 0], [0, 1, 1], [1, 1, 0]], [[1, 0, 0], [1, 1, 0], [0, 1, 0]]];
-
-var T = exports.T = [[[0, 1, 0], [1, 1, 1], [0, 0, 0]], [[0, 1, 0], [0, 1, 1], [0, 1, 0]], [[0, 0, 0], [1, 1, 1], [0, 1, 0]], [[0, 1, 0], [1, 1, 0], [0, 1, 0]]];
-
-var Z = exports.Z = [[[1, 1, 0], [0, 1, 1], [0, 0, 0]], [[0, 0, 1], [0, 1, 1], [0, 1, 0]], [[0, 0, 0], [1, 1, 0], [0, 1, 1]], [[0, 1, 0], [1, 1, 0], [1, 0, 0]]];
 
 /***/ })
 /******/ ]);

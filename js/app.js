@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded",function(){
     // Information displays on gamepad screen
     const startPage = document.querySelector('.start-game-info');
     const playBtn = document.querySelector('.play-btn');
-	const playerName = document.querySelector('#player-name span');
 	// const gameTime = document.querySelector('#game-time span');
     const score = document.getElementById('score');
     const gameLevel = document.getElementById('level');
@@ -287,6 +286,11 @@ document.addEventListener("DOMContentLoaded",function(){
         // alert("Game Over!"); // Game over!
         done = true;
         clearInterval(timerId);
+        const highScore = document.querySelector('#high-score');
+        highScore.textContent = singleRow;
+
+        const playerName = document.querySelector('#player-name');
+        console.log(playerName.textContent);
         const players = app.database().ref('players');
 
         const sortable = [];
@@ -298,7 +302,8 @@ document.addEventListener("DOMContentLoaded",function(){
         }, function (error) {
             console.log("Error: " + error.code);
         });
-
+        const gameOverInfo = document.querySelector(".game-over");
+        gameOverInfo.style.display = 'block';
         // sortable.sort(function(a, b) {
         //     return b[1] - a[1];
         // });

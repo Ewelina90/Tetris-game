@@ -51,9 +51,6 @@
                                 <canvas id="canvas-main"></canvas>
                             </div>
                             <div class="game-info">
-                                <p id="player-name" class="info">Player:</br>
-                                     <span>&nbsp;</span>
-                                 </p>
                                 <p id="player-score" class="info">Score: </br>
                                     <span id="score">0</span>
                                 </p>
@@ -66,6 +63,20 @@
                                 <p id="game-time" class="info">Time: </br>
                                     <label id="minutes">00</label>:<label id="seconds">00</label>
                                 </p>
+                            </div>
+                            <div class="game-over">
+                                <h2>GAME OV<span id='e-letter'>E</span><span id='r-letter'>R</span></h2>
+                                <h3>Your score: <span id="high-score"></span></h3>
+                                <h4 id="player-name" contenteditable="true">Type your name... <button> Send </button></h4>
+
+                                <h3>The Best High Scores</h3>
+                                <ol class='high-scores'>
+                                    <li>1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                    <li>4</li>
+                                    <li>5</li>
+                                </ol>
                             </div>
                 		</div>
                     </div>
