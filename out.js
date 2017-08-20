@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	canvasNext.height = nOfColNext * sizeOfTile;
 
 	// Information displays on gamepad screen
+	var startPage = document.querySelector('.start-game-info');
 	var playBtn = document.querySelector('.play-btn');
 	var playerName = document.querySelector('#player-name span');
 	// const gameTime = document.querySelector('#game-time span');
@@ -176,8 +177,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		}, 1000);
 	};
 
-	playBtn.addEventListener('click', function (e) {
-		// Btn play - starts the game
+	var playTheGame = function playTheGame() {
+		startPage.style.display = "none";
 		if (gameOn === false) {
 			var setName = prompt('Type your name: ');
 			if (setName === null) {
@@ -228,6 +229,11 @@ document.addEventListener("DOMContentLoaded", function () {
 		drawBoard();
 		drawBoardOnNext();
 		startGame();
+	};
+
+	playBtn.addEventListener('click', function (e) {
+		// Btn play - starts the game
+		playTheGame();
 	});
 	playBtn.addEventListener('mouseup', function (e) {
 		this.blur();
@@ -307,6 +313,9 @@ document.addEventListener("DOMContentLoaded", function () {
 					moveLRMusic.play();
 				}
 				currentShape.moveRight();
+				break;
+			case 32:
+				playTheGame();
 			default:
 		};
 	});
