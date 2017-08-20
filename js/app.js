@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded",function(){
         this.blur();
     });
 
-    tetrisMusic.play();
+    // tetrisMusic.play();
 
     soundBtn.addEventListener('click',function(e){
         const icon = this.firstElementChild.classList;
