@@ -51,22 +51,27 @@
                                 <canvas id="canvas-main"></canvas>
                             </div>
                             <div class="game-info">
-                                <p id="player-score" class="info">Score: </br>
+                                <p id="player-score" class="info">SCORE </br>
                                     <span id="score">0</span>
                                 </p>
-                                <p id="game-speed" class="info">Level: </br>
+                                <p id="game-speed" class="info">LEVEL </br>
                                     <span id="level">1</span>
                                 </p>
-                                <div class="game-board-frame">
+                                <div class="game-board-frame info">
+                                    <span>NEXT</span>
                                     <canvas id="canvas-next"></canvas>
                                 </div>
-                                <p id="game-time" class="info">Time: </br>
-                                    <label id="minutes">00</label>:<label id="seconds">00</label>
+                                <p id="game-time" class="info">TIME </br>
+                                    <span id="minutes">00</span>:<span id="seconds">00</span>
                                 </p>
+                                <ul class="screen-icons">
+                                    <li id='volume-icon'><i class="fa fa-volume-up" aria-hidden="true"></i></li>
+                                    <li id='pause-icon'><i class="fa fa-pause" aria-hidden="true"></i></li>
+                                </ul>
                             </div>
                             <div class="game-over">
-                                <h2>GAME OV<span id='e-letter'>E</span><span id='r-letter'>R</span></h2>
-                                <h3>Your score: <span id="high-score"></span></h3>
+                                <h2>GAME OVER</h2>
+                                <!--<h3>Your score: <span id="high-score"></span></h3>
                                 <h4 id="player-name" contenteditable="true">Type your name... <button> Send </button></h4>
 
                                 <h3>The Best High Scores</h3>
@@ -76,7 +81,7 @@
                                     <li>3</li>
                                     <li>4</li>
                                     <li>5</li>
-                                </ol>
+                                </ol> -->
                             </div>
                 		</div>
                     </div>

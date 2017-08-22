@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded",function(){
 	// const gameTime = document.querySelector('#game-time span');
     const score = document.getElementById('score');
     const gameLevel = document.getElementById('level');
+    const gameOverInfo = document.querySelector(".game-over");
 
     // GamePad buttons
     const leftBtn = document.querySelector('.arrow-buttons .left-btn');
@@ -101,6 +102,7 @@ document.addEventListener("DOMContentLoaded",function(){
 	};
 
     const playTheGame = () => {
+        gameOverInfo.style.display = 'none';
         startPage.style.display = "none";
         if(gameOn === false){
             // const setName = prompt('Type your name: ');
@@ -163,17 +165,17 @@ document.addEventListener("DOMContentLoaded",function(){
     // tetrisMusic.play();
 
     soundBtn.addEventListener('click',function(e){
-        const icon = this.firstElementChild.classList;
+        const icon = document.querySelector('#volume-icon');
         if(musicOn){
             tetrisMusic.pause();
             musicOn = false;
-            icon.remove("fa-volume-up");
-            icon.add("fa-volume-off");
+            icon.style.color = 'rgba(0, 0, 0, 0.4)';
+            // icon.add("fa-volume-off");
         }else if(gameOn){
             tetrisMusic.pause();
             musicOn = true;
-            icon.remove("fa-volume-off");
-            icon.add("fa-volume-up");
+            icon.style.color = 'rgba(0, 0, 0, 1)';
+            // icon.add("fa-volume-up");
         }else{
             tetrisMusic.play();
             musicOn = true;
@@ -186,15 +188,18 @@ document.addEventListener("DOMContentLoaded",function(){
     });
 
     pauseBtn.addEventListener('click',function(e){
+        const icon = document.querySelector('#pause-icon');
         const min = document.querySelector('#minutes');
 		const sec = document.querySelector('#seconds');
 		let a = parseInt(min.textContent);
 		let b = parseInt(sec.textContent);
         if(pause){
+            icon.style.color = 'rgba(0, 0, 0, 0.4)';
             pause = false;
             countTime(a,b);
             startGame();
         }else{
+            icon.style.color = 'rgba(0, 0, 0, 1)';
             cancelAnimationFrame(animationFrameId);
             clearInterval(timerId);
             pause = true;
@@ -286,29 +291,29 @@ document.addEventListener("DOMContentLoaded",function(){
         // alert("Game Over!"); // Game over!
         done = true;
         clearInterval(timerId);
-        const highScore = document.querySelector('#high-score');
-        highScore.textContent = singleRow;
+        // const highScore = document.querySelector('#high-score');
+        // highScore.textContent = singleRow;
 
-        const playerName = document.querySelector('#player-name');
-        console.log(playerName.textContent);
-        const players = app.database().ref('players');
-
-        const sortable = [];
-        players.once("value", function(data) {
-            let dane = data.val();
-            for (const key of Object.keys(dane)) {
-                sortable.push([dane[key].imie, dane[key].punkty]);
-            }
-        }, function (error) {
-            console.log("Error: " + error.code);
-        });
-        const gameOverInfo = document.querySelector(".game-over");
+        // const playerName = document.querySelector('#player-name');
+        // console.log(playerName.textContent);
+        // const players = app.database().ref('players');
+        //
+        // const sortable = [];
+        // players.once("value", function(data) {
+        //     let dane = data.val();
+        //     for (const key of Object.keys(dane)) {
+        //         sortable.push([dane[key].imie, dane[key].punkty]);
+        //     }
+        // }, function (error) {
+        //     console.log("Error: " + error.code);
+        // });
         gameOverInfo.style.display = 'block';
+        gameOverInfo.firstElementChild.classList.add('game-over-animate');
         // sortable.sort(function(a, b) {
         //     return b[1] - a[1];
         // });
-        console.log(sortable);
-        console.log(sortable["0"]);
+        // console.log(sortable);
+        // console.log(sortable["0"]);
         // let obiekt = {
         //     imie: "Ola",
         //     punkty: 380
@@ -330,6 +335,9 @@ document.addEventListener("DOMContentLoaded",function(){
     const drawPointOnNext = (x, y) => {					// Drow single square on next block board
 		ctxNext.fillRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
 		let style = ctxNext.strokeStyle;
+        ctxNext.fillStyle = "rgba(105, 111, 102, 0.3)";
+        ctxNext.fillRect(x * sizeOfTile + 2*sizeOfTile/8, y * sizeOfTile + 2*sizeOfTile/8, sizeOfTile/2, sizeOfTile/2);
+        ctxNext.fillStyle = style;
 		ctxNext.strokeStyle = "#5d5c5c";
 		ctxNext.strokeRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
 		ctxNext.strokeStyle = style;

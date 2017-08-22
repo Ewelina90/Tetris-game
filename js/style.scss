@@ -33,7 +33,7 @@ body {
 		.info {
 			display: inline-block;
 			padding: 0 2em;
-			font-size: 1.3em;
+			margin: 9px;
 		}
 		// #player-name {}
 		// #player-score {}
@@ -179,23 +179,41 @@ body {
 						width: 94px;
 						text-align: center;
 						p {
-							margin: 0;
 							padding: 0;
+							span {
+								display: inline-block;
+								padding-top: 7px;
+							}
 						}
 						.game-board-frame {
 							border: none;
 							width: 90px;
 							height: 90px;
-							padding: 10px;
-							margin: 0 auto;
+							padding: 0;
+							margin: 5px auto;
 
 							#canvas-next {
 								display: block;
 								border:1px solid #000000;
 								width: 60px;
 								height: 60px;
-								margin: 0 auto;
+								margin: 10px auto 5px auto;
 								background-color: #97b289;
+							}
+						}
+						.screen-icons {
+							margin:0;
+							padding: 0;
+							list-style: none;
+							li {
+								display: inline-block;
+								padding-right: 10px;
+								&#volume-icon {
+									color: rgba(0, 0, 0, 1);
+								}
+								&#pause-icon {
+									color: rgba(0, 0, 0, 0.4);
+								}
 							}
 						}
 					}
@@ -204,36 +222,53 @@ body {
 						text-align: center;
 						width: 254px;
 						height: 310px;
-						background-color: #97b289;
+						background-color: rgba(40, 41, 40, 0.5);
 						z-index: 1000;
 						display: none;
 						h2 {
+							margin-top: 110px;
 							letter-spacing: 2px;
+							font-size: 30px;
 						}
-						#r-letter {
-							display:inline-block;
-							position: relative;
-							top: 18px;
-							left: 5px;
-							transform: rotate(30deg);
-
+						.game-over-animate {
+							animation-name: bigger;
+  							animation-duration: 2s;
 						}
-						#e-letter {
-							display:inline-block;
-							position: relative;
-							top: 2px;
-							transform: rotate(10deg);
-
+						@keyframes bigger {
+						  0% {
+						    font-size: 30px;
+						  }
+						  50% {
+						    font-size: 35px;
+						  }
+						  100% {
+						    font-size: 30px;
+						  }
 						}
-						#player-name {
-							text-decoration: underline;
-							button {
-								width: 50px;
-								height: 30px;
-								@extend %buttons;
-								border-radius: 10px;
-							}
-						}
+						// #r-letter {
+						// 	display:inline-block;
+						// 	position: relative;
+						// 	top: 18px;
+						// 	left: 5px;
+						// 	transform: rotate(30deg);
+						//
+						// }
+						// #e-letter {
+						// 	display:inline-block;
+						// 	position: relative;
+						// 	top: 2px;
+						// 	transform: rotate(10deg);
+						//
+						// }
+						// #player-name {
+						// 	text-decoration: underline;
+						// 	button {
+						// 		width: 50px;
+						// 		height: 30px;
+						// 		@extend %buttons;
+						// 		border-radius: 10px;
+						// 	}
+						// }
 
 					}
 				}
