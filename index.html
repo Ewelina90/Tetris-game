@@ -8,119 +8,81 @@
     <script src="https://use.fontawesome.com/44763709f8.js"></script>
 </head>
 <body>
-    <div class="tetris-game container">
-        <div class="row">
-            <!-- <section class="game-info col-1">
-                <p id="player-name" class="info">Player: <span></span></p>
-                <p id="player-score" class="info">Score: <span id="score">0</span></p>
-                <p id="game-speed" class="info">Level: <span id="level">1</span></p>
-                <p id="game-time" class="info">Time: <label id="minutes">00</label>:<label id="seconds">00</label></p>
-                <button class="play-btn">PLAY</button></br></br>
-                <button class="score-btn">High Score</button>
-            </section> -->
-            <section class="game-board col-1">
-                <div class="game-pad">
-                    <h1>SUPER</h1>
-                    <div class="game-board-frame">
-                		<div class="game-board-main">
-                            <div class="start-game-info">
-                                <div class="start-game-content">
-                                    <div class="tetris-title">
-                                        <ul class="tetris-letters">
-                                            <li id="l-1">T</li>
-                                            <li id="l-2">E</li>
-                                            <li id="l-3">T</li>
-                                            <li id="l-4">R</li>
-                                            <li id="l-5">I</li>
-                                            <li id="l-6">S</li>
-                                        </ul>
-                                        <p>
-                                            Press <button><i class="fa fa-play" aria-hidden="true"></i></button> to play, or SPACE key.
-                                            <br><br>To navigate use buttons or keybord arrows.
-                                        </p>
-                                        <div class="keyboard-arrows">
-                                            <div class="key-arrow" id="arrow-1"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
-                                            <div class="key-arrow" id="arrow-2"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
-                                            <div class="key-arrow" id="arrow-3"><i class="fa fa-arrow-down" aria-hidden="true"></i></div>
-                                            <div class="key-arrow" id="arrow-4"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="canvas">
-                                <canvas id="canvas-main"></canvas>
-                            </div>
-                            <div class="game-info">
-                                <p id="player-score" class="info">SCORE </br>
-                                    <span id="score">0</span>
-                                </p>
-                                <p id="game-speed" class="info">LEVEL </br>
-                                    <span id="level">1</span>
-                                </p>
-                                <div class="game-board-frame info">
-                                    <span>NEXT</span>
-                                    <canvas id="canvas-next"></canvas>
-                                </div>
-                                <p id="game-time" class="info">TIME </br>
-                                    <span id="minutes">00</span>:<span id="seconds">00</span>
-                                </p>
-                                <ul class="screen-icons">
-                                    <li id='volume-icon'><i class="fa fa-volume-up" aria-hidden="true"></i></li>
-                                    <li id='pause-icon'><i class="fa fa-pause" aria-hidden="true"></i></li>
+    <section class="game-board">
+        <div class="game-pad">
+            <h1>SUPER</h1>
+            <div class="game-board-frame">
+        		<div class="game-board-main">
+                    <div class="start-game-info">
+                        <div class="start-game-content">
+                            <div class="tetris-title">
+                                <ul class="tetris-letters">
+                                    <li id="l-1">T</li>
+                                    <li id="l-2">E</li>
+                                    <li id="l-3">T</li>
+                                    <li id="l-4">R</li>
+                                    <li id="l-5">I</li>
+                                    <li id="l-6">S</li>
                                 </ul>
+                                <p>
+                                    Press <button><i class="fa fa-play" aria-hidden="true"></i></button> to play, or SPACE key.
+                                    <br><br>To navigate use buttons or keybord arrows.
+                                </p>
+                                <div class="keyboard-arrows">
+                                    <div class="key-arrow" id="arrow-1"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>
+                                    <div class="key-arrow" id="arrow-2"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
+                                    <div class="key-arrow" id="arrow-3"><i class="fa fa-arrow-down" aria-hidden="true"></i></div>
+                                    <div class="key-arrow" id="arrow-4"><i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+                                </div>
                             </div>
-                            <div class="game-over">
-                                <h2>GAME OVER</h2>
-                                <!--<h3>Your score: <span id="high-score"></span></h3>
-                                <h4 id="player-name" contenteditable="true">Type your name... <button> Send </button></h4>
-
-                                <h3>The Best High Scores</h3>
-                                <ol class='high-scores'>
-                                    <li>1</li>
-                                    <li>2</li>
-                                    <li>3</li>
-                                    <li>4</li>
-                                    <li>5</li>
-                                </ol> -->
-                            </div>
-                		</div>
+                        </div>
                     </div>
-                    <div class="game-controls">
-                        <div class="buttons-contener">
-                            <div class="horizontal-buttons">
-                                <button class="play-btn"><i class="fa fa-play" aria-hidden="true"></i></button>
-                                <button class="sound-btn"><i class="fa fa-volume-up" aria-hidden="true"></i></button>
-                                <button class="pause-btn"><i class="fa fa-pause" aria-hidden="true"></i></button>
-                            </div>
-                            <div class="arrow-buttons">
-                                <button class="left-btn">Left</button>
-                                <button class="down-btn">Down</button>
-                                <button class="right-btn">Right</button>
-                            </div>
-                            <div class="rotate-btn">
-                                <button class="rot-btn">Rotate</button>
-                            </div>
-
-
-                			<!-- <div class="vertical-buttons">
-                				<div class="middle-circle"></div>
-                			</div>
-                			<div class="horizontal-buttons">
-                			</div> -->
-                		</div>
+                    <div class="canvas">
+                        <canvas id="canvas-main"></canvas>
                     </div>
-                </div>
-            </section>
-            <!-- <section class="game-next-block col-1">
-                <h2>NEXT BLOCK</h2>
-                <div class="game-board-frame">
-                    <canvas id="canvas-next"></canvas>
-                </div>
-            </section> -->
+                    <div class="game-info">
+                        <p id="player-score" class="info">SCORE </br>
+                            <span id="score">0</span>
+                        </p>
+                        <p id="game-speed" class="info">LEVEL </br>
+                            <span id="level">1</span>
+                        </p>
+                        <div class="game-board-frame-next info">
+                            <span>NEXT</span>
+                            <canvas id="canvas-next"></canvas>
+                        </div>
+                        <p id="game-time" class="info">TIME </br>
+                            <span id="minutes">00</span>:<span id="seconds">00</span>
+                        </p>
+                        <ul class="screen-icons">
+                            <li id='volume-icon'><i class="fa fa-volume-up" aria-hidden="true"></i></li>
+                            <li id='pause-icon'><i class="fa fa-pause" aria-hidden="true"></i></li>
+                        </ul>
+                    </div>
+                    <div class="game-over">
+                        <h2>GAME OVER</h2>
+                    </div>
+        		</div>
+            </div>
+            <div class="game-controls">
+                <div class="buttons-contener">
+                    <div class="horizontal-buttons">
+                        <button class="play-btn"><i class="fa fa-play" aria-hidden="true"></i></button>
+                        <button class="sound-btn"><i class="fa fa-volume-up" aria-hidden="true"></i></button>
+                        <button class="pause-btn"><i class="fa fa-pause" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="arrow-buttons">
+                        <button class="left-btn">Left</button>
+                        <button class="down-btn">Down</button>
+                        <button class="right-btn">Right</button>
+                    </div>
+                    <div class="rotate-btn">
+                        <button class="rot-btn">Rotate</button>
+                    </div>
+        		</div>
+            </div>
         </div>
-    </div>
-    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase-database.js"></script>
+    </section>
 <script src="out.js"></script>
 </body>
 </html>

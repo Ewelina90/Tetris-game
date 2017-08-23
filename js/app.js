@@ -6,12 +6,6 @@ import { O } from './shapes.js';
 import { I } from './shapes.js';
 import { T } from './shapes.js';
 
-const config = {
-    apiKey: "AIzaSyC7T5R2opJNWtT6-fQ-KXcI8PRxGLwfnt0",
-    databaseURL: "https://tetris-555a0.firebaseio.com",
-};
-const app = firebase.initializeApp(config);
-
 document.addEventListener("DOMContentLoaded",function(){
     const canvas = document.getElementById('canvas-main');
 	const ctx = canvas.getContext("2d");
@@ -34,7 +28,6 @@ document.addEventListener("DOMContentLoaded",function(){
     // Information displays on gamepad screen
     const startPage = document.querySelector('.start-game-info');
     const playBtn = document.querySelector('.play-btn');
-	// const gameTime = document.querySelector('#game-time span');
     const score = document.getElementById('score');
     const gameLevel = document.getElementById('level');
     const gameOverInfo = document.querySelector(".game-over");
@@ -95,7 +88,7 @@ document.addEventListener("DOMContentLoaded",function(){
 				  min.innerText = ('0' + minutes);
 				  }
 				  else if( minutes > 59 ){
-					//   gameOver();
+					  gameOver();
 				  }else{ min.innerText = minutes; }
 			}else{ sec.innerText = seconds; }
 		}, 1000);
@@ -105,14 +98,8 @@ document.addEventListener("DOMContentLoaded",function(){
         gameOverInfo.style.display = 'none';
         startPage.style.display = "none";
         if(gameOn === false){
-            // const setName = prompt('Type your name: ');
-    		// if(setName === null){
-    		// 	return;
-    		// }else{
-            //     playerName.innerText = setName;
-                gameOn = true;
-                tetrisMusic.pause();
-            // }
+            gameOn = true;
+            tetrisMusic.pause();
         }else {
             const newGame = confirm('Are you sure you want to start a new game?');
             if(newGame === true){
@@ -170,12 +157,10 @@ document.addEventListener("DOMContentLoaded",function(){
             tetrisMusic.pause();
             musicOn = false;
             icon.style.color = 'rgba(0, 0, 0, 0.4)';
-            // icon.add("fa-volume-off");
         }else if(gameOn){
             tetrisMusic.pause();
             musicOn = true;
             icon.style.color = 'rgba(0, 0, 0, 1)';
-            // icon.add("fa-volume-up");
         }else{
             tetrisMusic.play();
             musicOn = true;
@@ -288,36 +273,10 @@ document.addEventListener("DOMContentLoaded",function(){
 	};
 
     const gameOver = () => {
-        // alert("Game Over!"); // Game over!
         done = true;
         clearInterval(timerId);
-        // const highScore = document.querySelector('#high-score');
-        // highScore.textContent = singleRow;
-
-        // const playerName = document.querySelector('#player-name');
-        // console.log(playerName.textContent);
-        // const players = app.database().ref('players');
-        //
-        // const sortable = [];
-        // players.once("value", function(data) {
-        //     let dane = data.val();
-        //     for (const key of Object.keys(dane)) {
-        //         sortable.push([dane[key].imie, dane[key].punkty]);
-        //     }
-        // }, function (error) {
-        //     console.log("Error: " + error.code);
-        // });
         gameOverInfo.style.display = 'block';
         gameOverInfo.firstElementChild.classList.add('game-over-animate');
-        // sortable.sort(function(a, b) {
-        //     return b[1] - a[1];
-        // });
-        // console.log(sortable);
-        // console.log(sortable["0"]);
-        // let obiekt = {
-        //     imie: "Ola",
-        //     punkty: 380
-        // };
     }
 
     const drawPoint = (x, y) => {					// Drow single square on game-board
@@ -342,7 +301,6 @@ document.addEventListener("DOMContentLoaded",function(){
 		ctxNext.strokeRect(x * sizeOfTile, y * sizeOfTile, sizeOfTile, sizeOfTile);
 		ctxNext.strokeStyle = style;
 	}
-
 
 	const drawBoard = () => {			// drow board on first canvas
 		let backCol = ctx.fillStyle;
