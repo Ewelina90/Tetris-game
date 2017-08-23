@@ -7,7 +7,6 @@
 body {
 	margin: 0;
 	padding: 0;
-
 }
 .game-info {
 	.info {
@@ -17,13 +16,13 @@ body {
 	}
 }
 .game-board {
-	background-color: #eae7e7;
 	width: 437px;
 	margin: 0 auto;
 	.game-pad {
 		margin: 0 auto;
 		width: 437px;
-		height: 100vh;
+		min-height: 600px;
+		max-height: 700px;
 		background-color: #bebcbd;
 		border-radius: 10px;
 		box-shadow: 0px 0px 10px 1px lighten(#bebcbd, 10%) inset;
@@ -127,7 +126,7 @@ body {
 			padding: 0;
 			li {
 				display: inline-block;
-				font-size: 55px;
+				font-size: 50px;
 				font-weight: 700;
 			}
 		}
@@ -214,9 +213,8 @@ body {
 .game-controls {
 	.buttons-contener {
 		z-index: 4;
-		$d-pad-circle-size: 320px;
-		width: $d-pad-circle-size;
-		height: $d-pad-circle-size;
+		width: 320px;
+		height: 230px;
 		margin: 0 auto;
 		padding-top: 30px;
 		.horizontal-buttons {

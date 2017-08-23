@@ -18,6 +18,7 @@
         box-shadow: 0px 0px 4px 0px grey inset;
     }
 }
+
 $colors-list: #f00, #ffa500, #ff0, #0000ff, #0ff, #a0f;
 @for $i from 1 to 7{
     #l-#{$i}{color: nth($colors-list,$i);
