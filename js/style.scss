@@ -16,13 +16,16 @@ body {
 	}
 }
 .game-board {
-	width: 437px;
+	width: 100%;
 	margin: 0 auto;
+	height: 100vh;
+	max-height: 1000px;
+	min-height: 620px;
 	.game-pad {
 		margin: 0 auto;
-		width: 437px;
-		min-height: 600px;
-		max-height: 700px;
+		max-width: 437px;
+		// min-width: 437px;
+		height: 100%;
 		background-color: #bebcbd;
 		border-radius: 10px;
 		box-shadow: 0px 0px 10px 1px lighten(#bebcbd, 10%) inset;
@@ -214,7 +217,7 @@ body {
 	.buttons-contener {
 		z-index: 4;
 		width: 320px;
-		height: 230px;
+		height: 217px;
 		margin: 0 auto;
 		padding-top: 30px;
 		.horizontal-buttons {
