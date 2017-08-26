@@ -21,6 +21,10 @@
 
 $colors-list: #f00, #ffa500, #ff0, #0000ff, #0ff, #a0f;
 @for $i from 1 to 7{
-    #l-#{$i}{color: nth($colors-list,$i);
+    .l-#{$i}{border-color: darken(nth($colors-list,$i),100%);
+        &::after {
+            background-color: darken(nth($colors-list,$i),100%);
         }
+        }
+
 }

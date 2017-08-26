@@ -228,31 +228,33 @@ document.addEventListener("DOMContentLoaded",function(){
 	});
 
     leftBtn.addEventListener("click", function(e){
+        e.preventDefault();
         currentShape.moveLeft();
     });
     leftBtn.addEventListener('mouseup',function(e){
         this.blur();
     });
     rightBtn.addEventListener("click", function(e){
+        e.preventDefault();
         currentShape.moveRight();
     });
     rightBtn.addEventListener('mouseup',function(e){
         this.blur();
     });
     downBtn.addEventListener("click", function(e){
+        e.preventDefault();
         currentShape.moveDown();
     });
     downBtn.addEventListener('mouseup',function(e){
         this.blur();
     });
     rotateBtn.addEventListener("click", function(e){
+        e.preventDefault();
         currentShape.rotate();
     });
     rotateBtn.addEventListener('mouseup',function(e){
         this.blur();
     });
-
-
 
     const newShape = () => {					// Get random shape
 		let randonShape = shapes[parseInt(Math.random() * shapes.length, 10)];

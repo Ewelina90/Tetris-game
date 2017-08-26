@@ -15,30 +15,80 @@ body {
 		margin: 9px;
 	}
 }
+.ver2 {
+	right: 10px;
+}
+.tetronimo {
+	width: 200px;
+	// position: relative;
+	// left: -74px;
+	.clear {
+		clear: both;
+	}
+	p {
+		height: 11px;
+		clear: both;
+	}
+	em {
+		display: block;
+    	width: 10px;
+    	height: 10px;
+    	overflow: hidden;
+    	float: left;
+	}
+	b {
+	   display: block;
+	   width: 9px;
+	   height: 9px;
+	   padding: 1px;
+	   border-width: 1px;
+	   border-style: solid;
+	   margin: 0 1px 1px 0;
+	   float: left;
+	   &:after{
+		 content: '';
+		 display: block;
+		 width: 5px;
+		 height: 5px;
+		//  background: #879372;
+		 overflow: hidden;
+	   }
+	//    &.c
+	//    {
+	// 	 border-color:#000;
+	// 	 &:after{
+	// 	   background:#000;
+	// 	 }
+	//    }
+	 }
+}
 .game-board {
 	width: 100%;
 	margin: 0 auto;
 	height: 100vh;
-	max-height: 1000px;
-	min-height: 620px;
+	background-color: black;
+	overflow: visible;
+	// max-height: 1000px;
+	// min-height: 620px;
 	.game-pad {
 		margin: 0 auto;
 		max-width: 437px;
-		// min-width: 437px;
+		min-width: 300px;
 		height: 100%;
+		max-height: 800px;
 		background-color: #bebcbd;
-		border-radius: 10px;
-		box-shadow: 0px 0px 10px 1px lighten(#bebcbd, 10%) inset;
+		border-radius: 15px;
+		box-shadow: 0px 0px 11px 3px lighten(#bebcbd, 10%) inset;
 		h1 {
 			text-align: center;
 			color: blue;
 			position: relative;
-			top: 12px;
+			top: 16px;
 			background: #bebcbd;
 			margin: 0 auto;
-			width: 5em;
+			width: 5.2em;
 			padding: 0 12px;
-			letter-spacing: 1px;
+			letter-spacing: 5px;
 		}
 	}
 }
@@ -54,7 +104,8 @@ body {
 	}
 }
 .game-board-frame {
-	border: 7px solid #ecd21e;
+	border: 7px solid rgb(152, 150, 151);
+	border-top: 7px dotted rgb(152, 150, 151);
 	width: 328px;
 	height: 390px;
 	padding: 26px;
@@ -119,7 +170,7 @@ body {
 	background-color: #97b289;
 	.start-game-content {
 		margin: 0 auto;
-		margin-top: 15px;
+		margin-top: 26px;
 		width: 204px;
 		height: 260px;
 		text-align: center;
@@ -135,7 +186,7 @@ body {
 		}
 		p {
 			text-align: center;
-			padding: 3px;
+			padding: 6px;
 			button {
 				@extend %buttons;
 				width: 25px;
