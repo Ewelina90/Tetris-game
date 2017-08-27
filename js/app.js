@@ -1,10 +1,4 @@
-import { Z } from './shapes.js';
-import { S } from './shapes.js';
-import { J } from './shapes.js';
-import { L } from './shapes.js';
-import { O } from './shapes.js';
-import { I } from './shapes.js';
-import { T } from './shapes.js';
+import { Z,S,J,L,O,I,T } from './shapes.js';
 
 document.addEventListener("DOMContentLoaded",function(){
     const canvas = document.getElementById('canvas-main');

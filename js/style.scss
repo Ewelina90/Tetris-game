@@ -15,13 +15,8 @@ body {
 		margin: 9px;
 	}
 }
-.ver2 {
-	right: 10px;
-}
 .tetronimo {
 	width: 200px;
-	// position: relative;
-	// left: -74px;
 	.clear {
 		clear: both;
 	}
@@ -50,16 +45,8 @@ body {
 		 display: block;
 		 width: 5px;
 		 height: 5px;
-		//  background: #879372;
 		 overflow: hidden;
 	   }
-	//    &.c
-	//    {
-	// 	 border-color:#000;
-	// 	 &:after{
-	// 	   background:#000;
-	// 	 }
-	//    }
 	 }
 }
 .game-board {
@@ -68,8 +55,6 @@ body {
 	height: 100vh;
 	background-color: black;
 	overflow: visible;
-	// max-height: 1000px;
-	// min-height: 620px;
 	.game-pad {
 		margin: 0 auto;
 		max-width: 437px;
