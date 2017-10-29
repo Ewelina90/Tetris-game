@@ -1,4 +1,4 @@
-export var I = [
+export const I = [
 	[
 		[0, 0, 0, 0],
 		[1, 1, 1, 1],
@@ -25,7 +25,7 @@ export var I = [
 	]
 ];
 
-export var J = [
+export const J = [
 	[
 		[1, 0, 0],
 		[1, 1, 1],
@@ -48,7 +48,7 @@ export var J = [
 	]
 ];
 
-export var L = [
+export const L = [
 	[
 		[0, 0, 1],
 		[1, 1, 1],
@@ -71,7 +71,7 @@ export var L = [
 	]
 ];
 
-export var O = [
+export const O = [
 	[
 		[0, 0, 0, 0],
 		[0, 1, 1, 0],
@@ -80,7 +80,7 @@ export var O = [
 	]
 ];
 
-export var S = [
+export const S = [
 	[
 		[0, 1, 1],
 		[1, 1, 0],
@@ -103,7 +103,7 @@ export var S = [
 	]
 ];
 
-export var T = [
+export const T = [
 	[
 		[0, 1, 0],
 		[1, 1, 1],
@@ -126,7 +126,7 @@ export var T = [
 	]
 ];
 
-export var Z = [
+export const Z = [
 	[
 		[1, 1, 0],
 		[0, 1, 1],
