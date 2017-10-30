@@ -63,7 +63,6 @@ document.addEventListener("DOMContentLoaded",function(){
     let boardNext = [];
     let gameOn = false;
 
-
     const countTime = (a = 0,b = 0) => { 		// Start counting game time
 		const min = document.querySelector('#minutes');
 		const sec = document.querySelector('#seconds');
